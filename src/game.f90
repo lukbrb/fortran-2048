@@ -3,7 +3,7 @@ module game
     
     private
 
-    public :: board_len
-    integer, parameter :: board_len = 4 ! On prend un carré 4x4 pour la grille
+    public :: board_size_cl
+    integer, parameter :: board_size_cl = 4 ! On prend un carré 4x4 pour la grille
 
 end module game
