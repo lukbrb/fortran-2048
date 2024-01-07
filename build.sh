@@ -7,4 +7,4 @@ LIBS="-framework IOKit -framework Cocoa -framework OpenGL $(pkg-config --libs --
 SRC="src/*.f90 app/main.f90"
 
 mkdir -p build/
-gfortran $FFLAGS -J build/ -o build/tictactoe $SRC $LIBS
+gfortran $FFLAGS -J build/ -o build/2048 $SRC $LIBS
