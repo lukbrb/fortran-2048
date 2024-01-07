@@ -20,6 +20,11 @@ module raylib
         type(Texture) :: texture
     end type Font
 
+    type, bind(C) :: Camera2D
+        type(Vector2) :: offset, target
+        real(c_float) :: rotation, zoom
+    end type Camera2D
+
     interface
 
     subroutine init_window(width,height,title) bind(C, name="InitWindow")
@@ -34,6 +39,9 @@ module raylib
       integer(c_int),value :: fps
     end subroutine set_target_fps
 
+    real(c_float) function get_frame_time() bind(C, name="GetFrameTime")
+        import :: c_float
+    end function get_frame_time
     subroutine begin_drawing() bind(C, name="BeginDrawing")
     end subroutine begin_drawing
 
@@ -81,6 +89,35 @@ module raylib
       type(c_ptr), value     :: fontChars
       integer(c_int), value  :: glyphCount
     end function load_font_ex
+
+    subroutine draw_text(text, posX, posY, font_size, color) bind(C, name="DrawText")
+        import :: c_char, c_float, c_int32_t, c_int
+        character(kind=c_char)   :: text(*)
+        integer(c_int), value     :: posX, posY, font_size
+        integer(c_int32_t), value :: color
+      end subroutine draw_text
+      
+    integer(c_int) function get_render_width() bind(C, name="GetRenderWidth")
+        import :: c_int
+    end function get_render_width
+
+    integer(c_int) function get_render_height() bind(C, name="GetRenderHeight")
+        import :: c_int
+    end function get_render_height
+
+    subroutine begin_mode_2d(camera) bind(C, name="BeginMode2D")
+        import :: Camera2D
+        type(Camera2D),value :: camera
+    end subroutine begin_mode_2d
+      ! RLAPI void EndMode2D(void);                                       // Ends 2D mode with custom camera
+    subroutine end_mode_2d() bind(C, name="EndMode2D")
+    end subroutine end_mode_2d
+
+    integer(c_int) function measure_text(text, font_size) bind(C, name="MeasureText")
+        import :: c_int, c_char
+        character(kind=c_char) :: text(*)
+        integer(c_int), value  :: font_size
+    end function measure_text
 
     end interface
 end module raylib
