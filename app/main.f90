@@ -8,8 +8,7 @@ program main
   integer(c_int32_t) :: bleu
   real(c_float) :: dt
   integer :: board(4, 4)
-
-  integer :: font_size = 128
+  integer(c_int) :: keypressed
   real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
   
   board = reshape([0, 0, 0, 0, &
@@ -31,6 +30,10 @@ program main
       call begin_screen_fitting()
       call clear_background(bleu)
       dt = get_frame_time()
+      keypressed = get_key_pressed()
+      if (keypressed /= 0) then 
+        print *, "Key pressed = ", keypressed
+      end if
       board_boundary_width  = screen_width_px * 2/3
       board_boundary_height = screen_height_px
 
