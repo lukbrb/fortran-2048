@@ -2,6 +2,7 @@ module raylib
     use iso_c_binding, only: c_char, c_int, c_bool, c_int32_t, c_float, c_ptr
     implicit none
     
+    ! Raylib cheatsheet: https://www.raylib.com/cheatsheet/cheatsheet.html
     type, bind(C) :: Rectangle
         real(c_float) :: x, y, width, height
     end type Rectangle
@@ -25,6 +26,12 @@ module raylib
         real(c_float) :: rotation, zoom
     end type Camera2D
 
+    enum, bind(C)
+        enumerator :: KEY_RIGHT = 262
+        enumerator :: KEY_LEFT
+        enumerator :: KEY_DOWN
+        enumerator :: KEY_UP
+    end enum
     interface
 
     subroutine init_window(width,height,title) bind(C, name="InitWindow")
@@ -118,6 +125,17 @@ module raylib
         character(kind=c_char) :: text(*)
         integer(c_int), value  :: font_size
     end function measure_text
+
+    ! bool IsKeyDown(int key);
+    logical(c_bool) function is_key_down(key) bind(C, name="IsKeyDown")
+    import :: c_int, c_bool
+        integer(c_int), value :: key
+    end function is_key_down
+
+    ! int GetKeyPressed(void);   
+    integer(c_int) function get_key_pressed() bind(C, name="GetKeyPressed")
+        import :: c_int
+    end function get_key_pressed
 
     end interface
 end module raylib
