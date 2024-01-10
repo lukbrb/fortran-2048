@@ -3,7 +3,7 @@
 set -xe
 
 FFLAGS="-std=f2003 -fno-range-check -Wall -Wextra -Wno-conversion"
-LIBS="-I ./include/ -L ./lib/ -lraylib -lglfw3 -lpthread -ldl"
+LIBS="-I ./include/ -L ./lib/ -lraylib -lglfw -lpthread -ldl"
 SRC="src/*.f90 app/main.f90"
 
 mkdir -p build/
