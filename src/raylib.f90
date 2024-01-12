@@ -1,7 +1,9 @@
 module raylib
-    use iso_c_binding, only: c_char, c_int, c_bool, c_int32_t, c_float, c_ptr
+    use iso_c_binding !, only: c_char, c_int, c_bool, c_int32_t, c_float, c_ptr, c_signed_char
     implicit none
     
+    integer, parameter :: c_unsigned_int  = c_int
+    integer, parameter :: c_unsigned_char = c_signed_char
     ! Raylib cheatsheet: https://www.raylib.com/cheatsheet/cheatsheet.html
     type, bind(C) :: Rectangle
         real(c_float) :: x, y, width, height
@@ -32,6 +34,14 @@ module raylib
         enumerator :: KEY_DOWN
         enumerator :: KEY_UP
     end enum
+
+!     type, bind(c), public :: color_type
+!         integer(kind=c_unsigned_char) :: r = 0_c_unsigned_int
+!         integer(kind=c_unsigned_char) :: g = 0_c_unsigned_int
+!         integer(kind=c_unsigned_char) :: b = 0_c_unsigned_int
+!         integer(kind=c_unsigned_char) :: a = 255_c_unsigned_int
+! end type color_type
+
     interface
 
     subroutine init_window(width,height,title) bind(C, name="InitWindow")
