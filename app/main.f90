@@ -2,7 +2,7 @@ program main
   use iso_c_binding, only: c_null_char, c_int, c_int32_t, c_null_ptr, c_float
   use raylib
   use ui
-  use game, only: move_numbers
+  use game, only: move_numbers, add_number_to_board, game_won, game_over
   implicit none
 
   integer(kind=c_int) :: width, height, fps
@@ -11,11 +11,10 @@ program main
   integer :: board(4, 4)
   integer(c_int) :: keypressed
   real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
-  
-  board = reshape([0, 0, 0, 2, &
-                   0, 2, 0, 0,&
-                   4, 0, 0, 2,&
-                   0, 2, 0, 0], shape=[4, 4])
+  board = reshape([0, 0, 0, 0,&
+                   0, 0, 0, 0,&
+                   0, 0, 0, 0,&
+                   0, 0, 0, 0], shape=[4, 4])
 
   width = 16*80
   height = 9*80
@@ -25,6 +24,7 @@ program main
   call init_window(width, height, "FORTRAN 2048"// c_null_char)
   call set_target_fps(fps)
 
+  call add_number_to_board(board)
   ! game_font = load_font_ex("fonts/Alegreya-Regular.ttf"//C_NULL_CHAR, font_size, C_NULL_PTR, 0)
   do while(.not. window_should_close())
     call begin_drawing()
@@ -32,9 +32,7 @@ program main
       call clear_background(bleu)
       dt = get_frame_time()
       keypressed = get_key_pressed()
-      ! if (keypressed /= 0) then 
-      !   print *, "Key pressed = ", keypressed
-      ! end if
+
       board_boundary_width  = screen_width_px * 2/3
       board_boundary_height = screen_height_px
 
@@ -55,14 +53,18 @@ program main
       cell_size_px = board_size_px/board_size_cl
 
       call render_board(board_x_px, board_y_px, board_size_px, board)
-      if (keypressed /= 0) then 
-        write(*, '(4(I4))') board
+      if (keypressed /= 0) then
         call move_numbers(board, keypressed)
-        print *, ""
-        write(*, '(4(I4))') board
+        call add_number_to_board(board)
+
+        if (game_over(board)) then
+          print *, "Game over"
+        end if
+        if (game_won(board)) then
+          print *, "Gagné, bravo !"
+        end if
       end if
       
-
       call end_screen_fitting()
     call end_drawing()
   end do
