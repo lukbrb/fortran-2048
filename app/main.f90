@@ -6,7 +6,6 @@ program main
   implicit none
 
   integer(kind=c_int) :: width, height, fps
-  integer(c_int32_t) :: bleu
   real(c_float) :: dt
   integer :: board(4, 4)
   integer(c_int) :: keypressed
@@ -19,7 +18,7 @@ program main
   width = 16*80
   height = 9*80
   fps = 60
-  bleu = int(z'FFF17900', c_int32_t)
+  
 
   call init_window(width, height, "FORTRAN 2048"// c_null_char)
   call set_target_fps(fps)
@@ -29,7 +28,7 @@ program main
   do while(.not. window_should_close())
     call begin_drawing()
       call begin_screen_fitting()
-      call clear_background(bleu)
+      call clear_background(BLEU)
       dt = get_frame_time()
       keypressed = get_key_pressed()
 

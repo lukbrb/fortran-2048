@@ -4,6 +4,7 @@ module raylib
     
     integer, parameter :: c_unsigned_int  = c_int
     integer, parameter :: c_unsigned_char = c_signed_char
+
     ! Raylib cheatsheet: https://www.raylib.com/cheatsheet/cheatsheet.html
     type, bind(C) :: Rectangle
         real(c_float) :: x, y, width, height
@@ -35,12 +36,12 @@ module raylib
         enumerator :: KEY_UP
     end enum
 
-!     type, bind(c), public :: color_type
-!         integer(kind=c_unsigned_char) :: r = 0_c_unsigned_int
-!         integer(kind=c_unsigned_char) :: g = 0_c_unsigned_int
-!         integer(kind=c_unsigned_char) :: b = 0_c_unsigned_int
-!         integer(kind=c_unsigned_char) :: a = 255_c_unsigned_int
-! end type color_type
+    type, bind(c), public :: color_type
+        integer(kind=c_unsigned_char) :: r = 0_c_unsigned_int
+        integer(kind=c_unsigned_char) :: g = 0_c_unsigned_int
+        integer(kind=c_unsigned_char) :: b = 0_c_unsigned_int
+        integer(kind=c_unsigned_char) :: a = 255_c_unsigned_int
+end type color_type
 
     interface
 
@@ -66,8 +67,9 @@ module raylib
     end subroutine end_drawing
 
     subroutine clear_background(color) bind(C, name="ClearBackground")
-        import :: c_int32_t
-        integer(c_int32_t), value :: color
+        import :: c_int32_t, color_type
+        ! integer(c_int32_t), value :: color
+        type(color_type), value :: color
     end subroutine clear_background
 
     logical(c_bool) function window_should_close() bind(C, name="WindowShouldClose")
@@ -75,11 +77,11 @@ module raylib
     end function window_should_close
 
     subroutine draw_rectangle_rounded(rec, roundness, segments, color) bind(C, name="DrawRectangleRounded")
-        import :: c_float, c_int, c_int32_t, Rectangle
+        import :: c_float, c_int, c_int32_t, Rectangle, color_type
         type(Rectangle), value :: rec
         real(c_float), value :: roundness
         integer(c_int), value :: segments
-        integer(c_int32_t), value :: color
+        type(color_type), value :: color
       end subroutine draw_rectangle_rounded
 
     ! RLAPI Vector2 MeasureTextEx(Font font, const char *text, float fontSize, float spacing);    // Measure string size for Font
@@ -108,10 +110,10 @@ module raylib
     end function load_font_ex
 
     subroutine draw_text(text, posX, posY, font_size, color) bind(C, name="DrawText")
-        import :: c_char, c_float, c_int32_t, c_int
+        import :: c_char, c_float, c_int32_t, c_int, color_type
         character(kind=c_char)   :: text(*)
         integer(c_int), value     :: posX, posY, font_size
-        integer(c_int32_t), value :: color
+        type(color_type), value :: color
       end subroutine draw_text
       
     integer(c_int) function get_render_width() bind(C, name="GetRenderWidth")
