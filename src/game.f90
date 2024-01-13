@@ -96,7 +96,7 @@ contains
         logical :: placed
         integer, dimension(10) :: new_num
 
-        new_num = [2, 2, 2, 4, 2, 2, 2, 2, 2, 2] ! on veut des 2 80% du temps
+        new_num = [2, 2, 2, 4, 2, 2, 2, 2, 2, 2] ! on veut des 2 90% du temps
         counter = 1
         placed = .false.
         if (.not. any(board == 0)) then
