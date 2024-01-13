@@ -4,21 +4,49 @@ module ui
     use game, only: board_size_cl
     implicit none
     
-    integer(c_int32_t), parameter :: cell_color = int(z'FF252525', c_int32_t)
-    integer(c_int32_t), parameter :: GREEN = int(z'FF30E400', c_int32_t)
-    integer(c_int32_t), parameter :: WHITE = int(z'FFFFFFFF', c_int32_t)
-    integer(c_int32_t), parameter :: CLR_2 = int(z'FFEEE4DA', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_4 = int(z'FFEDE0C8', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_8 = int(z'FFF2B179', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_16 = int(z'FFF59563', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_32 = int(z'FFF67C5F', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_64 = int(z'FFF65E3B', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_128 = int(z'FFEDCF72', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_256 = int(z'FFEDCC61', c_int32_t) 
-    integer(c_int32_t), parameter :: CLR_512 = int(z'FFEDC850', c_int32_t)
-    integer(c_int32_t), parameter :: CLR_1024 = int(z'FFEDC53F', c_int32_t)
-    integer(c_int32_t), parameter :: CLR_2048 = int(z'FFEDC22E', c_int32_t)
-    integer(c_int32_t), parameter :: CLR_SUPERTILE = int(z'FF3C3A32', c_int32_t)
+    ! integer(c_int32_t), parameter :: cell_color = int(z'FF252525', c_int32_t)
+    type(color_type),   parameter :: CELL_COLOR = color_type(37, 37, 37, 255)
+    ! integer(c_int32_t), parameter :: BLEU = int(z'FFF17900', c_int32_t)
+    type(color_type),   parameter :: BLEU = color_type(0, 121, 241, 255)
+    ! integer(c_int32_t), parameter :: GREEN = int(z'FF30E400', c_int32_t)
+    ! integer(c_int32_t), parameter :: WHITE = int(z'FFFFFFFF', c_int32_t)
+    type(color_type),   parameter :: WHITE = color_type(255, 255, 255, 255)
+    ! integer(c_int32_t), parameter :: CLR_2 = int(z'FFEEE4DA', c_int32_t)
+    type(color_type),   parameter :: CLR_2 = color_type(238, 228, 218, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_4 = int(z'FFEDE0C8', c_int32_t)
+    type(color_type),   parameter :: CLR_4 = color_type(237, 224, 200, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_8 = int(z'FFF2B179', c_int32_t)
+    type(color_type),   parameter :: CLR_8 = color_type(242, 177, 121, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_16 = int(z'FFF59563', c_int32_t)
+    type(color_type),   parameter :: CLR_16 = color_type(245, 149, 99, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_32 = int(z'FFF67C5F', c_int32_t)
+    type(color_type),   parameter :: CLR_32 = color_type(246, 124, 95, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_64 = int(z'FFF65E3B', c_int32_t)
+    type(color_type),   parameter :: CLR_64 = color_type(246, 94, 59, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_128 = int(z'FFEDCF72', c_int32_t)
+    type(color_type),   parameter :: CLR_128 = color_type(237, 207, 114, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_256 = int(z'FFEDCC61', c_int32_t)
+    type(color_type),   parameter :: CLR_256 = color_type(237, 204, 97, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_512 = int(z'FFEDC850', c_int32_t)
+    type(color_type),   parameter :: CLR_512 = color_type(237, 200, 80, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_1024 = int(z'FFEDC53F', c_int32_t)
+    type(color_type),   parameter :: CLR_1024 = color_type(237, 197, 63, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_2048 = int(z'FFEDC22E', c_int32_t)
+    type(color_type),   parameter :: CLR_2048 = color_type(237, 194, 46, 255)
+
+    ! integer(c_int32_t), parameter :: CLR_SUPERTILE = int(z'FF3C3A32', c_int32_t)
+    type(color_type),   parameter :: CLR_SUPERTILE = color_type(128,0,128, 255)
+
 
     integer(c_int),     parameter :: screen_factor           = 120
     integer(c_int),     parameter :: screen_width_px         = 16*screen_factor
@@ -28,7 +56,7 @@ module ui
 
     integer :: i
     integer, dimension(11), parameter :: nums = [(2**i, i=1, 11)]
-    integer(c_int32_t), dimension(11), parameter :: clrs = [CLR_2, CLR_4, CLR_8, CLR_16, CLR_32, CLR_64, CLR_128, &
+    type(color_type), dimension(11), parameter :: clrs = [CLR_2, CLR_4, CLR_8, CLR_16, CLR_32, CLR_64, CLR_128, &
                                                             CLR_256, CLR_512, CLR_1024, CLR_2048]
 
     real :: screen_scale = 1, screen_offset_x = 0, screen_offset_y = 0
@@ -50,7 +78,7 @@ contains
                 s_px = cell_size_px - (cell_size_px * board_padding_rl)
 
                 if (board(i, j) == 0) then
-                    call empty_cell(x_px, y_px, s_px, cell_color)
+                    call empty_cell(x_px, y_px, s_px, CELL_COLOR)
                 else
                     call draw_number(x_px, y_px, s_px, board(i, j))
                 end if
@@ -60,7 +88,7 @@ contains
 
     subroutine empty_cell(x_px, y_px, s_px, color)
         real, intent(in) :: x_px, y_px, s_px
-        integer(c_int32_t), intent(in) :: color
+        type(color_type) :: color
 
         call draw_rectangle_rounded(Rectangle(x_px, y_px, s_px, s_px), 0., 10, color)
     end subroutine empty_cell
@@ -69,12 +97,13 @@ contains
         real, intent(in) :: x_px, y_px, s_px
         integer, intent(in) :: number
         integer :: text_size_px
-        integer(c_int32_t) :: color
+        type(color_type) :: color
         ! type(Font), intent(in) :: game_font
         ! type(Vector2) :: text_size, text_pos
         character(4) :: disp_number ! number displayed on screen, from integer 'number'
 
         color = get_color(number)
+
         ! x_px = x_px + 0.5 * s_px
         ! y_px = y_px + 0.5 * s_px
         write(disp_number,'(i4)') number
@@ -114,7 +143,7 @@ contains
 
     pure function get_color(num) result(color)
         integer, intent(in) :: num
-        integer(c_int32_t) :: color
+        type(color_type) :: color
         integer :: num_idx ! où la couleur est dans le tableau
 
         num_idx = findloc(nums, num, dim=1)
