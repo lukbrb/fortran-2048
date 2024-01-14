@@ -4,7 +4,7 @@ module game
     
     private
 
-    public :: board_size_cl, move_numbers, add_number_to_board, game_over, game_won, get_score, board_moved
+    public :: board_size_cl, move_numbers, add_number_to_board, game_over, game_won, get_score, board_moved, get_record
     integer, parameter :: board_size_cl = 4 ! On prend un carré 4x4 pour la grille
 contains
 

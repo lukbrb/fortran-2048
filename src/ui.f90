@@ -90,7 +90,7 @@ contains
         real, intent(in) :: x_px, y_px, s_px
         type(color_type) :: color
 
-        call draw_rectangle_rounded(Rectangle(x_px, y_px, s_px, s_px), 0., 10, color)
+        call draw_rectangle_rounded(Rectangle(x_px, y_px, s_px, s_px), 0.15, 10, color)
     end subroutine empty_cell
 
     subroutine draw_number(x_px, y_px, s_px, number)

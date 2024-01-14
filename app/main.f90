@@ -2,7 +2,7 @@ program main
   use iso_c_binding, only: c_null_char, c_int, c_int32_t, c_null_ptr, c_float
   use raylib
   use ui
-  use game, only: move_numbers, add_number_to_board, game_won, game_over, get_score, board_moved
+  use game, only: move_numbers, add_number_to_board, game_won, game_over, get_score, board_moved, get_record
   implicit none
 
   integer(kind=c_int) :: width, height, fps
@@ -62,6 +62,7 @@ program main
         end if
       
         print *, "Score =", get_score(board)
+        print *, "Record=", get_record(0, get_score(board))
         if (game_over(board)) then
           print *, "Game over"
         end if
