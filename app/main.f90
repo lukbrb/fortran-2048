@@ -2,7 +2,7 @@ program main
   use iso_c_binding, only: c_null_char, c_int, c_int32_t, c_null_ptr, c_float
   use raylib
   use ui
-  use game, only: move_numbers, add_number_to_board, game_won, game_over
+  use game, only: move_numbers, add_number_to_board, game_won, game_over, get_score, board_moved
   implicit none
 
   integer(kind=c_int) :: width, height, fps
@@ -10,6 +10,8 @@ program main
   integer :: board(4, 4)
   integer(c_int) :: keypressed
   real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
+  logical :: can_board_move = .true.
+
   board = reshape([0, 0, 0, 0,&
                    0, 0, 0, 0,&
                    0, 0, 0, 0,&
@@ -53,9 +55,13 @@ program main
 
       call render_board(board_x_px, board_y_px, board_size_px, board)
       if (keypressed /= 0) then
-        call move_numbers(board, keypressed)
-        call add_number_to_board(board)
-
+        can_board_move = board_moved(board, keypressed)
+        if (can_board_move) then
+          call move_numbers(board, keypressed)
+          call add_number_to_board(board)
+        end if
+      
+        print *, "Score =", get_score(board)
         if (game_over(board)) then
           print *, "Game over"
         end if

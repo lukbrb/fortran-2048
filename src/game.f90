@@ -4,7 +4,7 @@ module game
     
     private
 
-    public :: board_size_cl, move_numbers, add_number_to_board, game_over, game_won
+    public :: board_size_cl, move_numbers, add_number_to_board, game_over, game_won, get_score, board_moved
     integer, parameter :: board_size_cl = 4 ! On prend un carré 4x4 pour la grille
 contains
 
@@ -42,6 +42,24 @@ contains
             end do
         end do
     end subroutine merge
+
+    logical function board_moved(board, direction) result(moved)
+        integer, intent(in) :: board(board_size_cl, board_size_cl)
+        integer, intent(in) :: direction
+        integer :: test_board(board_size_cl, board_size_cl)
+
+        test_board = board
+        ! essayer de bouger la matrice dans chaqure direction, et voir si elle change ou non
+        ! Si ne change pas, alors aucun mouv possible et c'est perdu
+
+        call move_numbers(test_board, direction)
+
+        if (all(test_board == board)) then
+            moved = .false.
+        else
+            moved = .true.
+        end if
+    end function board_moved
 
     function flip(array) result(farray)
         integer, intent(in) :: array(board_size_cl, board_size_cl)
@@ -134,16 +152,13 @@ contains
         integer :: test_board(board_size_cl, board_size_cl)
 
         test_board = board
-        ! essayer de bouger la matrice dans chaqure direction, et voir si elle change ou non
+        ! essayer de bouger la matrice dans chaque direction, et voir si elle change ou non
         ! Si ne change pas, alors aucun mouv possible et c'est perdu
-        print *, "Essai de la fonction game over"
-        write(*, '(4(I4))') board
+
         call move_numbers(test_board, KEY_LEFT)
         call move_numbers(test_board, KEY_UP)
         call move_numbers(test_board, KEY_RIGHT)
         call move_numbers(test_board, KEY_DOWN)
-        print *, ""
-        write(*, '(4(I4))') board
 
         if (all(test_board == board)) then
             game_over = .true.
@@ -151,4 +166,22 @@ contains
             game_over = .false.
         end if
     end function game_over
+
+    pure function get_score(board) result(score)
+        integer, intent(in) :: board(board_size_cl, board_size_cl)
+        integer :: score
+
+        score = sum(board)
+    end function get_score
+
+    pure function get_record(current_score, record_score) result(record)
+        integer, intent(in) :: current_score, record_score
+        integer :: record
+
+        if (current_score < record_score) then
+            record = record_score
+        else 
+            record = current_score
+        end if
+    end function get_record
 end module game
