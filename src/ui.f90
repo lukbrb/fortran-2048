@@ -4,48 +4,20 @@ module ui
     use game, only: board_size_cl
     implicit none
     
-    ! integer(c_int32_t), parameter :: cell_color = int(z'FF252525', c_int32_t)
     type(color_type),   parameter :: CELL_COLOR = color_type(37, 37, 37, 255)
-    ! integer(c_int32_t), parameter :: BLEU = int(z'FFF17900', c_int32_t)
-    type(color_type),   parameter :: BLEU = color_type(0, 121, 241, 255)
-    ! integer(c_int32_t), parameter :: GREEN = int(z'FF30E400', c_int32_t)
-    ! integer(c_int32_t), parameter :: WHITE = int(z'FFFFFFFF', c_int32_t)
-    type(color_type),   parameter :: WHITE = color_type(255, 255, 255, 255)
-    ! integer(c_int32_t), parameter :: CLR_2 = int(z'FFEEE4DA', c_int32_t)
+    type(color_type),   parameter :: restart_button_color = color_type(238, 238, 238, 255)
     type(color_type),   parameter :: CLR_2 = color_type(238, 228, 218, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_4 = int(z'FFEDE0C8', c_int32_t)
     type(color_type),   parameter :: CLR_4 = color_type(237, 224, 200, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_8 = int(z'FFF2B179', c_int32_t)
     type(color_type),   parameter :: CLR_8 = color_type(242, 177, 121, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_16 = int(z'FFF59563', c_int32_t)
     type(color_type),   parameter :: CLR_16 = color_type(245, 149, 99, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_32 = int(z'FFF67C5F', c_int32_t)
     type(color_type),   parameter :: CLR_32 = color_type(246, 124, 95, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_64 = int(z'FFF65E3B', c_int32_t)
     type(color_type),   parameter :: CLR_64 = color_type(246, 94, 59, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_128 = int(z'FFEDCF72', c_int32_t)
     type(color_type),   parameter :: CLR_128 = color_type(237, 207, 114, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_256 = int(z'FFEDCC61', c_int32_t)
     type(color_type),   parameter :: CLR_256 = color_type(237, 204, 97, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_512 = int(z'FFEDC850', c_int32_t)
     type(color_type),   parameter :: CLR_512 = color_type(237, 200, 80, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_1024 = int(z'FFEDC53F', c_int32_t)
     type(color_type),   parameter :: CLR_1024 = color_type(237, 197, 63, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_2048 = int(z'FFEDC22E', c_int32_t)
     type(color_type),   parameter :: CLR_2048 = color_type(237, 194, 46, 255)
-
-    ! integer(c_int32_t), parameter :: CLR_SUPERTILE = int(z'FF3C3A32', c_int32_t)
-    type(color_type),   parameter :: CLR_SUPERTILE = color_type(128,0,128, 255)
+    type(color_type),   parameter :: CLR_SUPERTILE = color_type(128, 0, 128, 255)
 
 
     integer(c_int),     parameter :: screen_factor           = 120
@@ -53,7 +25,14 @@ module ui
     integer(c_int),     parameter :: screen_height_px        = 9*screen_factor
     real,               parameter :: board_padding_rl        = 0.03
     real,               parameter :: board_margin_rl         = 0.10
-
+    real,               parameter :: restart_button_width_rl = 0.3
+    integer,            parameter :: fontsize_cells          = 50
+    integer,            parameter :: fontsize_score          = 50
+    integer,            parameter :: restart_button_id       = board_size_cl*board_size_cl + 1
+    type(Button_Style), parameter :: restart_button_style = Button_Style( &
+                                            color = restart_button_color, &
+                                            hover = -0.10, &
+                                            hold = -0.15)
     integer :: i
     integer, dimension(11), parameter :: nums = [(2**i, i=1, 11)]
     type(color_type), dimension(11), parameter :: clrs = [CLR_2, CLR_4, CLR_8, CLR_16, CLR_32, CLR_64, CLR_128, &
@@ -61,6 +40,7 @@ module ui
 
     real :: screen_scale = 1, screen_offset_x = 0, screen_offset_y = 0
 contains
+
     subroutine render_board(board_x_px, board_y_px, board_size_px, board)
         ! Note: _px signifie que les dimensions et tailles sont données en pixels 
         real, intent(in) :: board_x_px, board_y_px, board_size_px
@@ -107,12 +87,12 @@ contains
         ! x_px = x_px + 0.5 * s_px
         ! y_px = y_px + 0.5 * s_px
         write(disp_number,'(i4)') number
-        text_size_px = measure_text(disp_number//c_null_char, 50)
+        text_size_px = measure_text(disp_number//c_null_char, fontsize_cells)
         ! text_size = measure_text_ex(game_font, disp_number//c_null_char, 100., 0.0)
         ! text_pos = Vector2([x_px, y_px])
         call empty_cell(x_px, y_px, s_px, color)
-        call draw_text(disp_number//C_NULL_CHAR, int(x_px + 0.5 * (s_px-text_size_px), c_int), &
-                        int(y_px + 0.5 * s_px, c_int), 50, WHITE)
+        call draw_text(disp_number//C_NULL_CHAR, int(x_px +(s_px/2-text_size_px/2), c_int), &
+                        int(y_px + s_px/2 - fontsize_cells/2, c_int), fontsize_cells, WHITE)
     end subroutine draw_number
 
     subroutine begin_screen_fitting()
@@ -153,4 +133,90 @@ contains
         color = clrs(num_idx)
         end if
     end function get_color
+
+    function restart_button(board_x_px, board_y_px, board_size_px) result(clicked)
+        real,       intent(in) :: board_x_px, board_y_px, board_size_px
+        logical :: clicked
+        type(Vector2) :: text_pos, text_size
+        type(Rectangle) :: rec
+    
+        rec%width = board_size_px*restart_button_width_rl
+        rec%height = rec%width*0.4
+        rec%x = board_x_px + board_size_px/2 - rec%width/2
+        rec%y = board_y_px + board_size_px/2 - rec%height/2
+    
+        clicked = button(restart_button_id, rec, restart_button_style)
+    
+        text_pos = Vector2([rec%x, rec%y] + [rec%width, rec%height]/2 - text_size%array/2)
+        call draw_text("Restart"//C_NULL_CHAR, int(rec%x), int(rec%y), 10, WHITE)
+      end function restart_button
+
+      function button(id,boundary,style) result(clicked)
+        integer,            intent(in) :: id
+        type(Rectangle),    intent(in) :: boundary
+        type(Button_Style), intent(in) :: style
+        logical :: clicked
+
+        integer :: state
+
+        ! clicked = button_logic(id, boundary, state)
+        state = BUTTON_HOVER
+        select case (state)
+        case (BUTTON_UNPRESSED)
+            call draw_rectangle_rounded(boundary, 0.10, 10, style%color)
+        case (BUTTON_HOVER)
+            call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hover))
+        case (BUTTON_HOLD)
+            call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hold))
+        end select
+      end function button
+
+    !   function button_logic(id, boundary, state) result(clicked)
+    !     integer,         intent(in)  :: id
+    !     type(Rectangle), intent(in)  :: boundary
+    !     integer,         intent(out) :: state
+    !     logical :: clicked
+    
+    !     clicked = .false.
+    !     state = BUTTON_UNPRESSED
+    !     if (active_button_id == 0) then
+    !         if (check_collision_point_rect(get_mouse_position(), boundary)) then
+    !             if (is_mouse_button_down(MOUSE_BUTTON_LEFT)) then
+    !             state = BUTTON_HOLD
+    !             active_button_id = id
+    !             else
+    !             state = BUTTON_HOVER
+    !             end if
+    !         else
+    !             state = BUTTON_UNPRESSED
+    !         end if
+    !     else if (active_button_id == id) then
+    !         if (is_mouse_button_released(MOUSE_BUTTON_LEFT)) then
+    !             clicked = check_collision_point_rect(get_mouse_position(), boundary)
+    !             active_button_id = 0
+    !             state = BUTTON_UNPRESSED
+    !         else
+    !             state = BUTTON_HOLD
+    !         end if
+    !     else
+    !         ! TODO: handle the situation when the active button was not rendered on mouse release
+    !         ! If on mouse release the active button was not rendering, it may softlock the whole system
+    !         state = BUTTON_UNPRESSED
+    !     end if
+    ! end function button_logic
+
+    subroutine display_score(score, x_px, y_px, s_px, color, color_text)
+        integer, intent(in) :: score
+        real, intent(in) :: x_px, y_px, s_px
+        type(color_type), intent(in) :: color, color_text
+        character(7) :: disp_number
+        integer :: text_size_px
+
+        write(disp_number,'(i7)') score
+        text_size_px = measure_text(disp_number//c_null_char, fontsize_score)
+        call draw_rectangle_rounded(Rectangle(x_px, y_px, 2*s_px, s_px), 0.15, 10, color)
+        call draw_text(disp_number//C_NULL_CHAR, int(x_px + s_px/2 - text_size_px/2, c_int), &
+                                                 int(y_px + s_px/2 - fontsize_score/2, c_int), fontsize_score, color_text)
+    
+    end subroutine display_score
 end module ui
