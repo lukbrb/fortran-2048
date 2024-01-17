@@ -2,7 +2,9 @@ program main
   use iso_c_binding, only: c_null_char, c_int, c_int32_t, c_null_ptr, c_float
   use raylib
   use ui
-  use game, only: move_numbers, add_number_to_board, game_won, game_over, get_score, board_moved, get_record
+  use game, only: move_numbers, add_number_to_board, game_won, board_moved, get_score, game_over, &
+                  get_record, read_file, write_file
+
   implicit none
 
   integer(kind=c_int) :: width, height, fps
@@ -11,6 +13,12 @@ program main
   integer(c_int) :: keypressed
   real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
   logical :: can_board_move = .true.
+  logical :: clicked
+  integer :: score_record, score_actuel
+  character(15) :: path = "record.txt"
+  
+  score_record = read_file(path)
+  score_actuel = 0
 
   board = reshape([0, 0, 0, 0,&
                    0, 0, 0, 0,&
@@ -52,17 +60,19 @@ program main
       board_size_px = board_size_px - board_size_px*board_margin_rl*2
 
       cell_size_px = board_size_px/board_size_cl
-
+      score_actuel = get_score(board)
       call render_board(board_x_px, board_y_px, board_size_px, board)
+      call display_score(score_actuel, board_boundary_width, 50., 100., WHITE, CELL_COLOR)
+      call display_score(get_record(score_record, score_actuel), board_boundary_width + 250., 50., 100., WHITE, CELL_COLOR)
+
+
       if (keypressed /= 0) then
         can_board_move = board_moved(board, keypressed)
         if (can_board_move) then
           call move_numbers(board, keypressed)
           call add_number_to_board(board)
         end if
-      
-        print *, "Score =", get_score(board)
-        print *, "Record=", get_record(0, get_score(board))
+
         if (game_over(board)) then
           print *, "Game over"
         end if
@@ -74,4 +84,6 @@ program main
       call end_screen_fitting()
     call end_drawing()
   end do
+  print *, "Fermeture de la fenêtre. Écriture des résultats..."
+  call write_file(get_record(score_record, get_score(board)), path)
 end program main
