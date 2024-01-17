@@ -4,7 +4,7 @@ module raylib
     
     integer, parameter :: c_unsigned_int  = c_int
     integer, parameter :: c_unsigned_char = c_signed_char
-
+    
     ! Raylib cheatsheet: https://www.raylib.com/cheatsheet/cheatsheet.html
     type, bind(C) :: Rectangle
         real(c_float) :: x, y, width, height
@@ -36,12 +36,28 @@ module raylib
         enumerator :: KEY_UP
     end enum
 
+
+    enum, bind(C)
+        enumerator :: BUTTON_UNPRESSED = 0
+        enumerator :: BUTTON_HOVER
+        enumerator :: BUTTON_HOLD
+    end enum
+
     type, bind(c), public :: color_type
         integer(kind=c_unsigned_char) :: r = 0_c_unsigned_int
         integer(kind=c_unsigned_char) :: g = 0_c_unsigned_int
         integer(kind=c_unsigned_char) :: b = 0_c_unsigned_int
         integer(kind=c_unsigned_char) :: a = 255_c_unsigned_int
-end type color_type
+    end type color_type
+
+    type :: Button_Style
+        type(color_type) :: color
+        real :: hover, hold
+     end type Button_Style
+
+    type(color_type), parameter :: BLACK = color_type(0, 0, 0, 255)
+    type(color_type), parameter :: WHITE = color_type(255, 255, 255, 255)
+    type(color_type), parameter :: BLEU = color_type(0, 121, 241, 255)
 
     interface
 
@@ -148,6 +164,12 @@ end type color_type
     integer(c_int) function get_key_pressed() bind(C, name="GetKeyPressed")
         import :: c_int
     end function get_key_pressed
+
+    type(color_type) function color_brightness(color, factor) bind(C, name="ColorBrightness")
+        import :: c_float, color_type
+        type(color_type), value :: color
+        real(c_float), value :: factor
+    end function color_brightness
 
     end interface
 end module raylib
