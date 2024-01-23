@@ -33,8 +33,8 @@ module ui
                                             color = restart_button_color, &
                                             hover = -0.10, &
                                             hold = -0.15)
-    integer :: i
-    integer, dimension(11), parameter :: nums = [(2**i, i=1, 11)]
+    integer :: l
+    integer, dimension(11), parameter :: nums = [(2**l, l=1, 11)]
     type(color_type), dimension(11), parameter :: clrs = [CLR_2, CLR_4, CLR_8, CLR_16, CLR_32, CLR_64, CLR_128, &
                                                             CLR_256, CLR_512, CLR_1024, CLR_2048]
 

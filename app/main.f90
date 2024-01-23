@@ -2,8 +2,8 @@ program main
   use iso_c_binding, only: c_null_char, c_int, c_int32_t, c_null_ptr, c_float
   use raylib
   use ui
-  use game, only: move_numbers, add_number_to_board, game_won, board_moved, get_score, game_over, &
-                  get_record, read_file, write_file
+  use game
+  use iofiles
 
   implicit none
 

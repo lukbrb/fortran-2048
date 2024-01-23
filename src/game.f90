@@ -5,7 +5,7 @@ module game
     private
 
     public :: board_size_cl, move_numbers, add_number_to_board, game_over, game_won, &
-              get_score, board_moved, get_record, read_file, write_file
+              get_score, board_moved, get_record
     integer, parameter :: board_size_cl = 4 ! On prend un carré 4x4 pour la grille
 contains
 
@@ -186,43 +186,4 @@ contains
         end if
     end function get_record
 
-    integer function read_file(path) result(score)
-        character(*), intent(in) :: path
-        character(514) :: errmsg
-        integer :: stat, io
-        logical :: exists
-
-        
-        inquire(file=path, exist=exists)
-
-        if (exists) then
-            open(newunit=io, file=path, status="old", action="read", iostat=stat, iomsg=errmsg)
-
-            if (stat /= 0) then
-                score = 0
-                print *, errmsg
-            else
-                read(io, *) score
-                close(io)
-            end if
-        else
-            score = 0
-        end if
-    end function read_file
-
-    subroutine write_file(score, path)
-        character(*), intent(in) :: path
-        integer, intent(in) :: score
-        character(514) :: errmsg
-        integer :: stat, io
-
-        open(newunit=io, file=path, status="replace", action="write", iostat=stat, iomsg=errmsg)
-
-        if (stat /= 0) then
-            print *, errmsg
-        else
-            write(io, *) score
-            close(io)
-        end if
-    end subroutine write_file
 end module game
