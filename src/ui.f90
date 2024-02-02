@@ -219,4 +219,19 @@ contains
                                                  int(y_px + s_px/2 - fontsize_score/2, c_int), fontsize_score, color_text)
     
     end subroutine display_score
+
+    subroutine display_score_boxes(score, record, board_x_px, board_y_px, board_size_px)
+        integer, intent(in) :: score, record
+        real, intent(in) :: board_x_px, board_y_px, board_size_px
+        ! type(color_type), intent(in) :: color, color_text
+        character(7) :: disp_number
+        integer :: text_size_px
+        real :: cell_size_px
+
+        cell_size_px = board_size_px/board_size_cl
+        
+        call display_score(score, board_x_px + cell_size_px*2, board_y_px-100., 100., WHITE, CELL_COLOR)
+        call display_score(record, board_x_px + cell_size_px*2 + 200. + 2*board_margin_rl, &
+                            board_y_px-100., 100., WHITE, CELL_COLOR)
+    end subroutine display_score_boxes
 end module ui

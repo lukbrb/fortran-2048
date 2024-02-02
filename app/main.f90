@@ -62,9 +62,8 @@ program main
       cell_size_px = board_size_px/board_size_cl
       score_actuel = get_score(board)
       call render_board(board_x_px, board_y_px, board_size_px, board)
-      call display_score(score_actuel, board_x_px + cell_size_px*2, board_y_px-100., 100., WHITE, CELL_COLOR)
-      call display_score(get_record(score_record, score_actuel), board_x_px + cell_size_px*2 + 200. + 2*board_margin_rl, &
-                          board_y_px-100., 100., WHITE, CELL_COLOR)
+      call display_score_boxes(score_actuel, get_record(score_actuel, score_record), board_x_px, board_y_px, &
+                               board_size_px)
 
       if (keypressed /= 0) then
         can_board_move = board_moved(board, keypressed)
