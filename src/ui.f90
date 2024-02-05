@@ -4,7 +4,7 @@ module ui
     use game, only: board_size_cl
     implicit none
     
-    type(color_type),   parameter :: CELL_COLOR = color_type(37, 37, 37, 255)
+    type(color_type),   parameter :: CELL_COLOR = color_type(187, 173, 160, 255)
     type(color_type),   parameter :: restart_button_color = color_type(238, 238, 238, 255)
     type(color_type),   parameter :: CLR_2 = color_type(238, 228, 218, 255)
     type(color_type),   parameter :: CLR_4 = color_type(237, 224, 200, 255)
@@ -18,11 +18,15 @@ module ui
     type(color_type),   parameter :: CLR_1024 = color_type(237, 197, 63, 255)
     type(color_type),   parameter :: CLR_2048 = color_type(237, 194, 46, 255)
     type(color_type),   parameter :: CLR_SUPERTILE = color_type(128, 0, 128, 255)
+    type(color_type),   parameter :: BG_COLOR = color_type(249, 246, 242, 255)
+    type(color_type),   parameter :: SCORE_CONTAINER_CLR = color_type(119, 110, 101, 240)
+    type(color_type),   parameter :: GRID_BG_COLOR = color_type(119, 110, 101, 255)
 
 
     integer(c_int),     parameter :: screen_factor           = 120
     integer(c_int),     parameter :: screen_width_px         = 16*screen_factor
     integer(c_int),     parameter :: screen_height_px        = 9*screen_factor
+    integer(c_int),     parameter :: grid_margin             = 10
     real,               parameter :: board_padding_rl        = 0.03
     real,               parameter :: board_margin_rl         = 0.10
     real,               parameter :: restart_button_width_rl = 0.3
@@ -50,7 +54,10 @@ contains
         ! type(Font), intent(in) :: game_font
        
         cell_size_px = board_size_px / board_size_cl
-
+        ! Carré derrière la grille de jeu
+        call draw_rectangle_rounded(Rectangle(board_x_px-grid_margin, board_y_px-grid_margin, &
+                                    board_size_px+2*grid_margin, board_size_px+2*grid_margin),&
+                                    0.05, 10, GRID_BG_COLOR)
         do i = 1, board_size_cl
             do j = 1, board_size_cl
                 x_px = board_x_px + (i - 1) * cell_size_px + (cell_size_px*board_padding_rl)/2
@@ -230,8 +237,8 @@ contains
 
         cell_size_px = board_size_px/board_size_cl
         
-        call display_score(score, board_x_px + cell_size_px*2, board_y_px-100., 100., WHITE, CELL_COLOR)
+        call display_score(score, board_x_px + cell_size_px*2, board_y_px-100., 100., SCORE_CONTAINER_CLR, CELL_COLOR)
         call display_score(record, board_x_px + cell_size_px*2 + 200. + 2*board_margin_rl, &
-                            board_y_px-100., 100., WHITE, CELL_COLOR)
+                            board_y_px-100., 100., SCORE_CONTAINER_CLR, CELL_COLOR)
     end subroutine display_score_boxes
 end module ui
