@@ -38,7 +38,7 @@ program main
   do while(.not. window_should_close())
     call begin_drawing()
       call begin_screen_fitting()
-      call clear_background(BLEU)
+      call clear_background(BG_COLOR)
       dt = get_frame_time()
       keypressed = get_key_pressed()
 
