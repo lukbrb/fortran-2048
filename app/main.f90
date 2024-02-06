@@ -13,7 +13,7 @@ program main
   integer(c_int) :: keypressed
   real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
   logical :: can_board_move = .true.
-  logical :: clicked
+  ! logical :: clicked
   integer :: score_record, score_actuel
   character(15) :: path = "record.txt"
   
@@ -25,8 +25,8 @@ program main
                    0, 0, 0, 0,&
                    0, 0, 0, 0], shape=[4, 4])
 
-  width = 16*80
-  height = 9*80
+  width = screen_width_px
+  height = screen_height_px
   fps = 60
   
 
@@ -42,8 +42,8 @@ program main
       dt = get_frame_time()
       keypressed = get_key_pressed()
 
-      board_boundary_width  = screen_width_px * 2/3
-      board_boundary_height = screen_height_px 
+      board_boundary_width  = screen_width_px 
+      board_boundary_height = screen_height_px * 0.95
 
       if (board_boundary_width > board_boundary_height) then
          board_size_px = board_boundary_height
