@@ -5,7 +5,7 @@ module ui
     implicit none
     
     type(color_type),   parameter :: CELL_COLOR = color_type(187, 173, 160, 255)
-    ! type(color_type),   parameter :: restart_button_color = color_type(238, 238, 238, 255)
+    type(color_type),   parameter :: restart_button_color = color_type(238, 238, 238, 255)
     type(color_type),   parameter :: CLR_2 = color_type(238, 228, 218, 255)
     type(color_type),   parameter :: CLR_4 = color_type(237, 224, 200, 255)
     type(color_type),   parameter :: CLR_8 = color_type(242, 177, 121, 255)
@@ -32,11 +32,11 @@ module ui
     real,               parameter :: restart_button_width_rl = 0.3
     integer,            parameter :: fontsize_cells          = 50
     integer,            parameter :: fontsize_score          = 50
-    ! integer,            parameter :: restart_button_id       = board_size_cl*board_size_cl + 1
-    ! type(Button_Style), parameter :: restart_button_style = Button_Style( &
-    !                                         color = restart_button_color, &
-    !                                         hover = -0.10, &
-    !                                         hold = -0.15)
+    integer,            parameter :: restart_button_id       = board_size_cl*board_size_cl + 1
+    type(Button_Style), parameter :: restart_button_style = Button_Style( &
+                                            color = restart_button_color, &
+                                            hover = -0.10, &
+                                            hold = -0.15)
     integer :: l
     integer, dimension(11), parameter :: nums = [(2**l, l=1, 11)]
     type(color_type), dimension(11), parameter :: clrs = [CLR_2, CLR_4, CLR_8, CLR_16, CLR_32, CLR_64, CLR_128, &
@@ -50,10 +50,16 @@ contains
         real, intent(in) :: board_x_px, board_y_px, board_size_px
         integer, intent(in) :: board(board_size_cl, board_size_cl)
         integer :: i, j
+        logical :: button_clicked
         real :: cell_size_px, x_px, y_px, s_px 
         ! type(Font), intent(in) :: game_font
        
         cell_size_px = board_size_px / board_size_cl
+        x_px = board_x_px + (cell_size_px*board_padding_rl)/2
+        y_px = board_y_px - 0.5 * cell_size_px + (cell_size_px*board_padding_rl)/2
+        s_px = cell_size_px - (cell_size_px * board_padding_rl)
+
+        button_clicked = restart_button(x_px, y_px, s_px)
         ! Carré derrière la grille de jeu
         call draw_rectangle_rounded(Rectangle(board_x_px-grid_margin, board_y_px + 0.5*cell_size_px-grid_margin, &
                                     board_size_px+2*grid_margin, board_size_px+2*grid_margin),&
@@ -141,42 +147,39 @@ contains
         end if
     end function get_color
 
-    ! function restart_button(board_x_px, board_y_px, board_size_px) result(clicked)
-    !     real,       intent(in) :: board_x_px, board_y_px, board_size_px
-    !     logical :: clicked
-    !     type(Vector2) :: text_pos, text_size
-    !     type(Rectangle) :: rec
+    function restart_button(board_x_px, board_y_px, board_size_px) result(clicked)
+        real,       intent(in) :: board_x_px, board_y_px, board_size_px
+        logical :: clicked
+        type(Rectangle) :: rec
     
-    !     rec%width = board_size_px*restart_button_width_rl
-    !     rec%height = rec%width*0.4
-    !     rec%x = board_x_px + board_size_px/2 - rec%width/2
-    !     rec%y = board_y_px + board_size_px/2 - rec%height/2
+        rec%width = board_size_px*restart_button_width_rl
+        rec%height = rec%width*0.4
+        rec%x = board_x_px + board_size_px/2 - rec%width/2
+        rec%y = board_y_px + board_size_px/2 - rec%height/2
     
-    !     clicked = button(restart_button_id, rec, restart_button_style)
+        clicked = button(restart_button_id, rec, restart_button_style)
     
-    !     text_pos = Vector2([rec%x, rec%y] + [rec%width, rec%height]/2 - text_size%array/2)
-    !     call draw_text("Restart"//C_NULL_CHAR, int(rec%x), int(rec%y), 10, WHITE)
-    !   end function restart_button
+        call draw_text("Rejouer"//C_NULL_CHAR, int(rec%x), int(rec%y), 10, WHITE)
+      end function restart_button
 
-    !   function button(id,boundary,style) result(clicked)
-    !     integer,            intent(in) :: id
-    !     type(Rectangle),    intent(in) :: boundary
-    !     type(Button_Style), intent(in) :: style
-    !     logical :: clicked
+      function button(id,boundary,style) result(clicked)
+        integer,            intent(in) :: id
+        type(Rectangle),    intent(in) :: boundary
+        type(Button_Style), intent(in) :: style
+        logical :: clicked
+        integer :: state
 
-    !     integer :: state
-
-    !     ! clicked = button_logic(id, boundary, state)
-    !     state = BUTTON_HOVER
-    !     select case (state)
-    !     case (BUTTON_UNPRESSED)
-    !         call draw_rectangle_rounded(boundary, 0.10, 10, style%color)
-    !     case (BUTTON_HOVER)
-    !         call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hover))
-    !     case (BUTTON_HOLD)
-    !         call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hold))
-    !     end select
-    !   end function button
+        ! clicked = button_logic(id, boundary, state)
+        state = BUTTON_HOVER
+        select case (state)
+        case (BUTTON_UNPRESSED)
+            call draw_rectangle_rounded(boundary, 0.10, 10, style%color)
+        case (BUTTON_HOVER)
+            call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hover))
+        case (BUTTON_HOLD)
+            call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hold))
+        end select
+      end function button
 
     !   function button_logic(id, boundary, state) result(clicked)
     !     integer,         intent(in)  :: id

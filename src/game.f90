@@ -123,7 +123,6 @@ contains
             return
         end if
         do while (.not. placed .and. counter < board_size_cl**2)
-            print *, "While loop"
             rand_i = rand_int(1, board_size_cl)
             rand_j = rand_int(1, board_size_cl)
             rand_k = rand_int(1, 10)
