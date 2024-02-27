@@ -1,5 +1,5 @@
 module ui
-    use iso_c_binding, only: c_int32_t, c_null_char, c_null_ptr
+    use iso_c_binding, only: c_int32_t, c_null_char, c_null_ptr, c_bool
     use raylib
     use game, only: board_size_cl
     implicit none
@@ -43,6 +43,11 @@ module ui
                                                             CLR_256, CLR_512, CLR_1024, CLR_2048]
 
     real :: screen_scale = 1, screen_offset_x = 0, screen_offset_y = 0
+
+    type :: Button_type
+        type(Rectangle) :: rectangle
+        type(color_type) :: color
+    end type
 contains
 
     subroutine render_board(board_x_px, board_y_px, board_size_px, board)
@@ -77,6 +82,8 @@ contains
                 end if
             end do
         end do
+
+        
     end subroutine render_board
 
     subroutine empty_cell(x_px, y_px, s_px, color)
@@ -147,22 +154,52 @@ contains
         end if
     end function get_color
 
+    subroutine init_button(button, rect, color)
+        type(Button_type), intent(inout) :: button
+        type(Rectangle), intent(in) :: rect
+        type(color_type), intent(in) :: color
+        
+        button%rectangle = rect
+        button%color = color
+    end subroutine init_button
+
+    logical function is_mouse_over_button(button)
+        type(Button_type), intent(in) :: button
+        type(Vector2) :: mouse_position
+
+        mouse_position = get_mouse_position()
+        is_mouse_over_button = check_collision_point_rect(mouse_position, button%rectangle)
+    end function is_mouse_over_button
+
     function restart_button(board_x_px, board_y_px, board_size_px) result(clicked)
         real,       intent(in) :: board_x_px, board_y_px, board_size_px
         logical :: clicked
+        integer :: text_size_px, text_size_rl
         type(Rectangle) :: rec
-    
-        rec%width = board_size_px*restart_button_width_rl
+        type(Button_type) :: button
+
+        rec%width = board_size_px*restart_button_width_rl * 3
         rec%height = rec%width*0.4
         rec%x = board_x_px + board_size_px/2 - rec%width/2
         rec%y = board_y_px + board_size_px/2 - rec%height/2
-    
-        clicked = button(restart_button_id, rec, restart_button_style)
-    
-        call draw_text("Rejouer"//C_NULL_CHAR, int(rec%x), int(rec%y), 10, WHITE)
+        
+        call init_button(button, rec, GRID_BG_COLOR)
+        ! clicked = button(restart_button_id, rec, restart_button_style)
+        if (is_mouse_over_button(button)) then
+            button%color = BLEU
+        else
+            button%color = GRID_BG_COLOR
+        end if
+        text_size_rl = 20
+        text_size_px = measure_text("Rejouer"//C_NULL_CHAR, text_size_rl)
+        call draw_rectangle_rounded(rec, 0.10, 20, button%color)
+        call draw_text("Rejouer"//C_NULL_CHAR, int(rec%x + 0.5 * (rec%width-text_size_px)), &
+                        int(rec%y + rec%height/2), text_size_rl, WHITE)
+
       end function restart_button
 
-      function button(id,boundary,style) result(clicked)
+
+      function button_behavior(id,boundary,style) result(clicked)
         integer,            intent(in) :: id
         type(Rectangle),    intent(in) :: boundary
         type(Button_Style), intent(in) :: style
@@ -179,7 +216,7 @@ contains
         case (BUTTON_HOLD)
             call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hold))
         end select
-      end function button
+      end function button_behavior
 
     !   function button_logic(id, boundary, state) result(clicked)
     !     integer,         intent(in)  :: id
