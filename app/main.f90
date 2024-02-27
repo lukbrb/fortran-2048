@@ -71,7 +71,7 @@ program main
           call move_numbers(board, keypressed)
           call add_number_to_board(board)
         end if
-
+ 
         if (game_over(board)) then
           print *, "Game over"
         end if
@@ -84,5 +84,6 @@ program main
     call end_drawing()
   end do
   print *, "Fermeture de la fenêtre. Écriture des résultats..."
+  call close_window()
   call write_file(get_record(score_record, get_score(board)), path)
 end program main

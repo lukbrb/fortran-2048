@@ -68,6 +68,8 @@ module raylib
       character(kind=c_char) :: title(*)
     end subroutine init_window
 
+    subroutine close_window() bind(C, name="CloseWindow")
+    end subroutine close_window
     subroutine set_target_fps(fps) bind(C, name="SetTargetFPS")
       import :: c_int
       integer(c_int),value :: fps
@@ -171,5 +173,14 @@ module raylib
         real(c_float), value :: factor
     end function color_brightness
 
+    type(Vector2) function get_mouse_position() bind(C, name="GetMousePosition")
+        import :: Vector2
+    end function get_mouse_position
+
+    logical(c_bool) function check_collision_point_rect(point, rec) bind(C, name="CheckCollisionPointRec")
+        import Vector2, Rectangle, c_bool
+        type(Vector2), value :: point
+        type(Rectangle), value :: rec
+    end function check_collision_point_rect
     end interface
 end module raylib
