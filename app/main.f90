@@ -55,7 +55,7 @@ program main
 
       cell_size_px = board_size_px/board_size_cl
       score_actuel = get_score(board)
-      call render_board(board_x_px, board_y_px, board_size_px, board)
+      call render_board(board_x_px, board_y_px, board_size_px, board, restart_the_game)
       call display_score_boxes(score_actuel, get_record(score_actuel, score_record), board_x_px, board_y_px, &
                                board_size_px)
       ! if (restart_button_clicked()) then
@@ -69,12 +69,11 @@ program main
         end if
  
         if (game_won(board)) then
-          print *, "Gagné, bravo !"
+          call display_game_win()
         end if
       end if
 
       if (game_over(board)) then
-        print *, "Game over"
         call display_game_over(restart_the_game)
       end if
      

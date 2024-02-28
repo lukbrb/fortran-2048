@@ -64,10 +64,11 @@ module ui
     ! type(Button_type) :: restart_button = Button_type(button_dimensions, new_button_style)
 contains
 
-    subroutine render_board(board_x_px, board_y_px, board_size_px, board)
+    subroutine render_board(board_x_px, board_y_px, board_size_px, board, restart_game)
         ! Note: _px signifie que les dimensions et tailles sont données en pixels 
         real, intent(in) :: board_x_px, board_y_px, board_size_px
         integer, intent(inout) :: board(board_size_cl, board_size_cl)
+        logical, intent(inout) :: restart_game
         integer :: i, j
         logical :: button_clicked
         real :: cell_size_px, x_px, y_px, s_px 
@@ -80,7 +81,7 @@ contains
 
         button_clicked = new_game_button_clicked(x_px, y_px, s_px)
         if (button_clicked) then
-            board = init_board()
+            restart_game = .true.
         end if
         ! Carré derrière la grille de jeu
         call draw_rectangle_rounded(Rectangle(board_x_px-grid_margin, board_y_px + 0.5*cell_size_px-grid_margin, &
@@ -333,4 +334,13 @@ contains
         call draw_button(button, rec, restart_button_style%color, GRID_BG_COLOR)
         restart_game = button_behavior(restart_button_id, button, restart_button_style, GRID_BG_COLOR)
     end subroutine display_game_over
+
+    subroutine display_game_win()
+        integer :: text_size_px, fontsize
+        fontsize = 50
+        text_size_px = measure_text("C'est gagné !"//C_NULL_CHAR, fontsize)
+        call draw_rectangle_rounded(Rectangle(0., 0., screen_width_px, screen_height_px), 0., 0, BG_MSG_COLOR)
+        call draw_text("C'est gagné !"//C_NULL_CHAR, (screen_width_px - text_size_px)/2, &
+                        (screen_height_px - fontsize)/2, fontsize, WHITE)
+    end subroutine display_game_win
 end module ui
