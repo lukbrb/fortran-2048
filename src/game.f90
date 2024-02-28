@@ -5,9 +5,21 @@ module game
     private
 
     public :: board_size_cl, move_numbers, add_number_to_board, game_over, game_won, &
-              get_score, board_moved, get_record
+              get_score, board_moved, get_record, init_board
     integer, parameter :: board_size_cl = 4 ! On prend un carré 4x4 pour la grille
 contains
+
+    function init_board() result(new_board)
+        integer :: new_board(board_size_cl, board_size_cl)
+
+        new_board = reshape([0, 0, 0, 0, &
+                            0, 0, 0, 0, &
+                            0, 0, 0, 0, &
+                            0, 0, 0, 0], shape=[board_size_cl, board_size_cl])
+        
+        call add_number_to_board(new_board)
+
+    end function init_board
 
     function compress(board) result(new_board)
         integer, intent(in) :: board(board_size_cl, board_size_cl)

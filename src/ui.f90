@@ -1,7 +1,7 @@
 module ui
     use iso_c_binding, only: c_int32_t, c_null_char, c_null_ptr, c_bool
     use raylib
-    use game, only: board_size_cl
+    use game, only: board_size_cl, init_board
     implicit none
     
     type(color_type),   parameter :: CELL_COLOR = color_type(187, 173, 160, 255)
@@ -61,7 +61,7 @@ contains
     subroutine render_board(board_x_px, board_y_px, board_size_px, board)
         ! Note: _px signifie que les dimensions et tailles sont données en pixels 
         real, intent(in) :: board_x_px, board_y_px, board_size_px
-        integer, intent(in) :: board(board_size_cl, board_size_cl)
+        integer, intent(inout) :: board(board_size_cl, board_size_cl)
         integer :: i, j
         logical :: button_clicked
         real :: cell_size_px, x_px, y_px, s_px 
@@ -72,7 +72,10 @@ contains
         y_px = board_y_px - 0.5 * cell_size_px + (cell_size_px*board_padding_rl)/2
         s_px = cell_size_px - (cell_size_px * board_padding_rl)
 
-        button_clicked = restart_button(x_px, y_px, s_px)
+        button_clicked = restart_button_clicked(x_px, y_px, s_px)
+        if (button_clicked) then
+            board = init_board()
+        end if
         ! Carré derrière la grille de jeu
         call draw_rectangle_rounded(Rectangle(board_x_px-grid_margin, board_y_px + 0.5*cell_size_px-grid_margin, &
                                     board_size_px+2*grid_margin, board_size_px+2*grid_margin),&
@@ -185,7 +188,7 @@ contains
         is_mouse_over_button = check_collision_point_rect(mouse_position, button%rectangle)
     end function is_mouse_over_button
 
-    function restart_button(board_x_px, board_y_px, board_size_px) result(clicked)
+    function restart_button_clicked(board_x_px, board_y_px, board_size_px) result(clicked)
         real,       intent(in) :: board_x_px, board_y_px, board_size_px
         logical :: clicked
         type(Rectangle) :: rec
@@ -201,17 +204,7 @@ contains
         if (clicked) then
             print *, "Rejouer"
         end if
-        ! if (is_mouse_over_button(button)) then
-        !     button%color = BLEU
-        ! else
-        !     button%color = GRID_BG_COLOR
-        ! end if
-
-        ! call draw_rectangle_rounded(rec, 0.10, 20, button%style)
-        ! call draw_text("Rejouer"//C_NULL_CHAR, int(rec%x + 0.5 * (rec%width-text_size_px)), &
-        !                 int(rec%y + rec%height/2), text_size_rl, WHITE)
-
-      end function restart_button
+      end function restart_button_clicked
 
 
       function button_behavior(id, button) result(clicked)
