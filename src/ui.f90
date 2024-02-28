@@ -5,7 +5,7 @@ module ui
     implicit none
     
     type(color_type),   parameter :: CELL_COLOR = color_type(187, 173, 160, 255)
-    type(color_type),   parameter :: restart_button_color = color_type(238, 238, 238, 255)
+    type(color_type),   parameter :: restart_button_color = color_type(119, 110, 101, 255)
     type(color_type),   parameter :: CLR_2 = color_type(238, 228, 218, 255)
     type(color_type),   parameter :: CLR_4 = color_type(237, 224, 200, 255)
     type(color_type),   parameter :: CLR_8 = color_type(242, 177, 121, 255)
@@ -33,10 +33,11 @@ module ui
     integer,            parameter :: fontsize_cells          = 50
     integer,            parameter :: fontsize_score          = 50
     integer,            parameter :: restart_button_id       = board_size_cl*board_size_cl + 1
+    integer :: active_button_id = 0
     type(Button_Style), parameter :: restart_button_style = Button_Style( &
                                             color = restart_button_color, &
-                                            hover = -0.10, &
-                                            hold = -0.15)
+                                            hover = -0.20, &
+                                            hold = -0.30)
     integer :: l
     integer, dimension(11), parameter :: nums = [(2**l, l=1, 11)]
     type(color_type), dimension(11), parameter :: clrs = [CLR_2, CLR_4, CLR_8, CLR_16, CLR_32, CLR_64, CLR_128, &
@@ -48,6 +49,13 @@ module ui
         type(Rectangle) :: rectangle
         type(color_type) :: color
     end type
+
+    ! real, parameter :: button_width = board_size_px * restart_button_width_rl * 3
+    ! real, parameter :: button_height = button_width * 0.4
+    ! real, parameter :: button_x = board_x_px + board_size_px/2 - button_width/2
+    ! real, parameter :: button_y = board_y_px + board_size_px/2 - button_height/2
+    ! type(Rectangle), parameter :: button_dimensions = Rectangle(button_width, button_height, button_x, button_y)
+    ! type(Button_type) :: restart_button = Button_type(button_dimensions, restart_button_style)
 contains
 
     subroutine render_board(board_x_px, board_y_px, board_size_px, board)
@@ -154,14 +162,20 @@ contains
         end if
     end function get_color
 
-    subroutine init_button(button, rect, color)
+    subroutine draw_button(button, rect, color)
         type(Button_type), intent(inout) :: button
         type(Rectangle), intent(in) :: rect
         type(color_type), intent(in) :: color
-        
+        integer :: text_size_px, text_size_rl
+
         button%rectangle = rect
         button%color = color
-    end subroutine init_button
+        text_size_rl = 20
+        text_size_px = measure_text("Rejouer"//C_NULL_CHAR, text_size_rl)
+        call draw_rectangle_rounded(rect, 0.10, 20, button%color)
+        call draw_text("Rejouer"//C_NULL_CHAR, int(rect%x + 0.5 * (rect%width-text_size_px)), &
+                        int(rect%y + rect%height/2), text_size_rl, WHITE)
+    end subroutine draw_button
 
     logical function is_mouse_over_button(button)
         type(Button_type), intent(in) :: button
@@ -174,7 +188,6 @@ contains
     function restart_button(board_x_px, board_y_px, board_size_px) result(clicked)
         real,       intent(in) :: board_x_px, board_y_px, board_size_px
         logical :: clicked
-        integer :: text_size_px, text_size_rl
         type(Rectangle) :: rec
         type(Button_type) :: button
 
@@ -183,74 +196,74 @@ contains
         rec%x = board_x_px + board_size_px/2 - rec%width/2
         rec%y = board_y_px + board_size_px/2 - rec%height/2
         
-        call init_button(button, rec, GRID_BG_COLOR)
-        ! clicked = button(restart_button_id, rec, restart_button_style)
-        if (is_mouse_over_button(button)) then
-            button%color = BLEU
-        else
-            button%color = GRID_BG_COLOR
+        call draw_button(button, rec, restart_button_style%color)
+        clicked = button_behavior(restart_button_id, button)
+        if (clicked) then
+            print *, "Rejouer"
         end if
-        text_size_rl = 20
-        text_size_px = measure_text("Rejouer"//C_NULL_CHAR, text_size_rl)
-        call draw_rectangle_rounded(rec, 0.10, 20, button%color)
-        call draw_text("Rejouer"//C_NULL_CHAR, int(rec%x + 0.5 * (rec%width-text_size_px)), &
-                        int(rec%y + rec%height/2), text_size_rl, WHITE)
+        ! if (is_mouse_over_button(button)) then
+        !     button%color = BLEU
+        ! else
+        !     button%color = GRID_BG_COLOR
+        ! end if
+
+        ! call draw_rectangle_rounded(rec, 0.10, 20, button%style)
+        ! call draw_text("Rejouer"//C_NULL_CHAR, int(rec%x + 0.5 * (rec%width-text_size_px)), &
+        !                 int(rec%y + rec%height/2), text_size_rl, WHITE)
 
       end function restart_button
 
 
-      function button_behavior(id,boundary,style) result(clicked)
+      function button_behavior(id, button) result(clicked)
         integer,            intent(in) :: id
-        type(Rectangle),    intent(in) :: boundary
-        type(Button_Style), intent(in) :: style
+        type(Button_type),    intent(inout) :: button
         logical :: clicked
         integer :: state
 
-        ! clicked = button_logic(id, boundary, state)
-        state = BUTTON_HOVER
+        clicked = button_logic(id, button%rectangle, state)
         select case (state)
         case (BUTTON_UNPRESSED)
-            call draw_rectangle_rounded(boundary, 0.10, 10, style%color)
+            call draw_button(button, button%rectangle, restart_button_style%color)
         case (BUTTON_HOVER)
-            call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hover))
+            call draw_button(button, button%rectangle, color_brightness(button%color, restart_button_style%hover))
         case (BUTTON_HOLD)
-            call draw_rectangle_rounded(boundary, 0.10, 10, color_brightness(style%color, style%hold))
+            call draw_button(button, button%rectangle, color_brightness(button%color, restart_button_style%hold))        
         end select
       end function button_behavior
 
-    !   function button_logic(id, boundary, state) result(clicked)
-    !     integer,         intent(in)  :: id
-    !     type(Rectangle), intent(in)  :: boundary
-    !     integer,         intent(out) :: state
-    !     logical :: clicked
+      function button_logic(id, boundary, state) result(clicked)
+        integer,         intent(in)  :: id
+        type(Rectangle), intent(in)  :: boundary
+        integer,         intent(out) :: state
+        logical :: clicked
     
-    !     clicked = .false.
-    !     state = BUTTON_UNPRESSED
-    !     if (active_button_id == 0) then
-    !         if (check_collision_point_rect(get_mouse_position(), boundary)) then
-    !             if (is_mouse_button_down(MOUSE_BUTTON_LEFT)) then
-    !             state = BUTTON_HOLD
-    !             active_button_id = id
-    !             else
-    !             state = BUTTON_HOVER
-    !             end if
-    !         else
-    !             state = BUTTON_UNPRESSED
-    !         end if
-    !     else if (active_button_id == id) then
-    !         if (is_mouse_button_released(MOUSE_BUTTON_LEFT)) then
-    !             clicked = check_collision_point_rect(get_mouse_position(), boundary)
-    !             active_button_id = 0
-    !             state = BUTTON_UNPRESSED
-    !         else
-    !             state = BUTTON_HOLD
-    !         end if
-    !     else
-    !         ! TODO: handle the situation when the active button was not rendered on mouse release
-    !         ! If on mouse release the active button was not rendering, it may softlock the whole system
-    !         state = BUTTON_UNPRESSED
-    !     end if
-    ! end function button_logic
+        clicked = .false.
+        state = BUTTON_UNPRESSED
+        if (active_button_id == 0) then
+            if (check_collision_point_rect(get_mouse_position(), boundary)) then
+                if (is_mouse_button_down(MOUSE_BUTTON_LEFT)) then
+                state = BUTTON_HOLD
+                active_button_id = id
+                else
+                state = BUTTON_HOVER
+                end if
+            else
+                state = BUTTON_UNPRESSED
+            end if
+        else if (active_button_id == id) then
+            if (is_mouse_button_released(MOUSE_BUTTON_LEFT)) then
+                clicked = check_collision_point_rect(get_mouse_position(), boundary)
+                active_button_id = 0
+                state = BUTTON_UNPRESSED
+            else
+                state = BUTTON_HOLD
+            end if
+        else
+            ! TODO: handle the situation when the active button was not rendered on mouse release
+            ! If on mouse release the active button was not rendering, it may softlock the whole system
+            state = BUTTON_UNPRESSED
+        end if
+    end function button_logic
 
     subroutine display_score(score, x_px, y_px, s_px, color, color_text)
         integer, intent(in) :: score

@@ -58,7 +58,7 @@ module raylib
     type(color_type), parameter :: BLACK = color_type(0, 0, 0, 255)
     type(color_type), parameter :: WHITE = color_type(255, 255, 255, 255)
     type(color_type), parameter :: BLEU = color_type(0, 121, 241, 255)
-
+    integer(c_int32_t), parameter :: MOUSE_BUTTON_LEFT = 0
     interface
 
     subroutine init_window(width,height,title) bind(C, name="InitWindow")
@@ -178,9 +178,25 @@ module raylib
     end function get_mouse_position
 
     logical(c_bool) function check_collision_point_rect(point, rec) bind(C, name="CheckCollisionPointRec")
-        import Vector2, Rectangle, c_bool
+        import :: Vector2, Rectangle, c_bool
         type(Vector2), value :: point
         type(Rectangle), value :: rec
     end function check_collision_point_rect
+
+    logical(c_bool) function is_mouse_button_pressed(button) bind(C, name="IsMouseButtonPressed")
+    import :: c_int, c_bool
+    integer(c_int),value :: button
+  end function is_mouse_button_pressed
+
+  logical(c_bool) function is_mouse_button_down(button) bind(C, name="IsMouseButtonDown")
+    import :: c_int, c_bool
+    integer(c_int),value :: button
+  end function is_mouse_button_down
+
+  logical(c_bool) function is_mouse_button_released(button) bind(C, name="IsMouseButtonReleased")
+    import :: c_int, c_bool
+    integer(c_int),value :: button
+  end function is_mouse_button_released
+
     end interface
 end module raylib
