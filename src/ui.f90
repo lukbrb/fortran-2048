@@ -21,6 +21,7 @@ module ui
     type(color_type),   parameter :: BG_COLOR = color_type(249, 246, 242, 255)
     type(color_type),   parameter :: SCORE_CONTAINER_CLR = color_type(119, 110, 101, 240)
     type(color_type),   parameter :: GRID_BG_COLOR = color_type(119, 110, 101, 255)
+    type(color_type),   parameter :: BG_MSG_COLOR = color_type(10, 10, 10, 150)
 
 
     integer(c_int),     parameter :: screen_factor           = 80
@@ -32,10 +33,15 @@ module ui
     real,               parameter :: restart_button_width_rl = 0.3
     integer,            parameter :: fontsize_cells          = 50
     integer,            parameter :: fontsize_score          = 50
-    integer,            parameter :: restart_button_id       = board_size_cl*board_size_cl + 1
+    integer,            parameter :: new_button_id           = board_size_cl*board_size_cl + 1
+    integer,            parameter :: restart_button_id       = screen_width_px**2 + 1
     integer :: active_button_id = 0
-    type(Button_Style), parameter :: restart_button_style = Button_Style( &
+    type(Button_Style), parameter :: new_button_style = Button_Style( &
                                             color = restart_button_color, &
+                                            hover = -0.20, &
+                                            hold = -0.30)
+    type(Button_Style), parameter :: restart_button_style = Button_Style( &
+                                            color = BG_COLOR, &
                                             hover = -0.20, &
                                             hold = -0.30)
     integer :: l
@@ -55,7 +61,7 @@ module ui
     ! real, parameter :: button_x = board_x_px + board_size_px/2 - button_width/2
     ! real, parameter :: button_y = board_y_px + board_size_px/2 - button_height/2
     ! type(Rectangle), parameter :: button_dimensions = Rectangle(button_width, button_height, button_x, button_y)
-    ! type(Button_type) :: restart_button = Button_type(button_dimensions, restart_button_style)
+    ! type(Button_type) :: restart_button = Button_type(button_dimensions, new_button_style)
 contains
 
     subroutine render_board(board_x_px, board_y_px, board_size_px, board)
@@ -72,7 +78,7 @@ contains
         y_px = board_y_px - 0.5 * cell_size_px + (cell_size_px*board_padding_rl)/2
         s_px = cell_size_px - (cell_size_px * board_padding_rl)
 
-        button_clicked = restart_button_clicked(x_px, y_px, s_px)
+        button_clicked = new_game_button_clicked(x_px, y_px, s_px)
         if (button_clicked) then
             board = init_board()
         end if
@@ -94,7 +100,6 @@ contains
             end do
         end do
 
-        
     end subroutine render_board
 
     subroutine empty_cell(x_px, y_px, s_px, color)
@@ -165,10 +170,10 @@ contains
         end if
     end function get_color
 
-    subroutine draw_button(button, rect, color)
+    subroutine draw_button(button, rect, color, text_color)
         type(Button_type), intent(inout) :: button
         type(Rectangle), intent(in) :: rect
-        type(color_type), intent(in) :: color
+        type(color_type), intent(in) :: color, text_color
         integer :: text_size_px, text_size_rl
 
         button%rectangle = rect
@@ -177,7 +182,7 @@ contains
         text_size_px = measure_text("Rejouer"//C_NULL_CHAR, text_size_rl)
         call draw_rectangle_rounded(rect, 0.10, 20, button%color)
         call draw_text("Rejouer"//C_NULL_CHAR, int(rect%x + 0.5 * (rect%width-text_size_px)), &
-                        int(rect%y + rect%height/2), text_size_rl, WHITE)
+                        int(rect%y + (rect%height - text_size_rl)/2), text_size_rl, text_color)
     end subroutine draw_button
 
     logical function is_mouse_over_button(button)
@@ -188,7 +193,7 @@ contains
         is_mouse_over_button = check_collision_point_rect(mouse_position, button%rectangle)
     end function is_mouse_over_button
 
-    function restart_button_clicked(board_x_px, board_y_px, board_size_px) result(clicked)
+    function new_game_button_clicked(board_x_px, board_y_px, board_size_px) result(clicked)
         real,       intent(in) :: board_x_px, board_y_px, board_size_px
         logical :: clicked
         type(Rectangle) :: rec
@@ -199,28 +204,43 @@ contains
         rec%x = board_x_px + board_size_px/2 - rec%width/2
         rec%y = board_y_px + board_size_px/2 - rec%height/2
         
-        call draw_button(button, rec, restart_button_style%color)
-        clicked = button_behavior(restart_button_id, button)
-        if (clicked) then
-            print *, "Rejouer"
-        end if
-      end function restart_button_clicked
+        call draw_button(button, rec, new_button_style%color, WHITE)
+        clicked = button_behavior(new_button_id, button, new_button_style, WHITE)
 
+      end function new_game_button_clicked
 
-      function button_behavior(id, button) result(clicked)
+    ! function restart_button_clicked(screen_x_px, screen_y_px) result(clicked)
+    !     real, intent(in) :: screen_x_px, screen_y_px
+    !     logical :: clicked
+    !     type(Rectangle) :: rec
+    !     type(Button_type) :: button
+
+    !     rec%width = screen_x_px*restart_button_width_rl * 0.5
+    !     rec%height = rec%width*0.4
+    !     rec%x = screen_width_px/2 - rec%width/2
+    !     rec%y = screen_height_px/2 - rec%height/2
+        
+    !     call draw_button(button, rec, restart_button_style%color)
+    !     clicked = button_behavior(restart_button_id, button, restart_button_style)
+
+    ! end function restart_button_clicked
+
+    function button_behavior(id, button, style, text_color) result(clicked)
         integer,            intent(in) :: id
         type(Button_type),    intent(inout) :: button
+        type(Button_Style), intent(in) :: style
+        type(color_type), intent(in) :: text_color
         logical :: clicked
         integer :: state
 
         clicked = button_logic(id, button%rectangle, state)
         select case (state)
         case (BUTTON_UNPRESSED)
-            call draw_button(button, button%rectangle, restart_button_style%color)
+            call draw_button(button, button%rectangle, style%color, text_color)
         case (BUTTON_HOVER)
-            call draw_button(button, button%rectangle, color_brightness(button%color, restart_button_style%hover))
+            call draw_button(button, button%rectangle, color_brightness(button%color, style%hover), text_color)
         case (BUTTON_HOLD)
-            call draw_button(button, button%rectangle, color_brightness(button%color, restart_button_style%hold))        
+            call draw_button(button, button%rectangle, color_brightness(button%color, style%hold), text_color)        
         end select
       end function button_behavior
 
@@ -293,4 +313,24 @@ contains
         call display_score(record, x_px, y_px, s_px, SCORE_CONTAINER_CLR, CELL_COLOR)
 
     end subroutine display_score_boxes
+
+    subroutine display_game_over(restart_game)
+        type(Rectangle) :: rec
+        type(Button_type) :: button
+        logical, intent(inout) :: restart_game
+        integer :: text_size_px, fontsize
+        fontsize = 50
+        text_size_px = measure_text("Game over !"//C_NULL_CHAR, fontsize)
+        call draw_rectangle_rounded(Rectangle(0., 0., screen_width_px, screen_height_px), 0., 0, BG_MSG_COLOR)
+        call draw_text("Game over !"//C_NULL_CHAR, (screen_width_px - text_size_px)/2, &
+                        (screen_height_px - fontsize)/2, fontsize, WHITE)
+
+        rec%width = screen_width_px * restart_button_width_rl * 0.5
+        rec%height = rec%width * 0.4
+        rec%x = screen_width_px/2 - rec%width/2
+        rec%y = screen_height_px/2 - rec%height/2 + 2 * fontsize
+        
+        call draw_button(button, rec, restart_button_style%color, GRID_BG_COLOR)
+        restart_game = button_behavior(restart_button_id, button, restart_button_style, GRID_BG_COLOR)
+    end subroutine display_game_over
 end module ui

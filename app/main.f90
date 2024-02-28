@@ -13,7 +13,7 @@ program main
   integer(c_int) :: keypressed
   real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
   logical :: can_board_move = .true.
-  ! logical :: clicked
+  logical :: restart_the_game = .false.
   integer :: score_record, score_actuel
   character(15) :: path = "record.txt"
   
@@ -68,14 +68,20 @@ program main
           call add_number_to_board(board)
         end if
  
-        if (game_over(board)) then
-          print *, "Game over"
-        end if
         if (game_won(board)) then
           print *, "Gagné, bravo !"
         end if
       end if
-      
+
+      if (game_over(board)) then
+        print *, "Game over"
+        call display_game_over(restart_the_game)
+      end if
+     
+      if (restart_the_game) then
+        board = init_board()
+        restart_the_game = .false.
+      end if
       call end_screen_fitting()
     call end_drawing()
   end do
