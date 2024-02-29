@@ -141,16 +141,9 @@ contains
 
             if (board(rand_i, rand_j) == 0) then
                 board(rand_i, rand_j) = new_num(rand_k)
-                ! print *, "New number", new_num(rand_k),  "added at", "(i=", rand_i, ",", rand_j, ")"
-                ! write(*, '(4(I4))') board
                 placed = .true.
-                counter = counter + 1
             end if
         end do
-
-        if (counter == board_size_cl**2) then
-            print *, "La partie est perdu ?"
-        end if
     end subroutine add_number_to_board
 
     logical function game_won(board)

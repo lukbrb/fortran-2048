@@ -1,5 +1,5 @@
 module raylib
-    use iso_c_binding !, only: c_char, c_int, c_bool, c_int32_t, c_float, c_ptr, c_signed_char
+    use iso_c_binding 
     implicit none
     
     integer, parameter :: c_unsigned_int  = c_int
@@ -43,6 +43,7 @@ module raylib
         enumerator :: BUTTON_HOLD
     end enum
 
+    ! Emprunté à fortran-raylib : https://github.com/interkosmos/fortran-raylib
     type, bind(c), public :: color_type
         integer(kind=c_unsigned_char) :: r = 0_c_unsigned_int
         integer(kind=c_unsigned_char) :: g = 0_c_unsigned_int
@@ -59,8 +60,9 @@ module raylib
     type(color_type), parameter :: WHITE = color_type(255, 255, 255, 255)
     type(color_type), parameter :: BLEU = color_type(0, 121, 241, 255)
     integer(c_int32_t), parameter :: MOUSE_BUTTON_LEFT = 0
-    interface
 
+    interface
+    
     subroutine init_window(width,height,title) bind(C, name="InitWindow")
       import :: c_char, c_int
       integer(c_int),value :: width

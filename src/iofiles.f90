@@ -8,9 +8,8 @@ contains
         integer :: stat, io
         logical :: exists
 
-
         inquire(file=path, exist=exists)
-
+        
         if (exists) then
             open(newunit=io, file=path, status="old", action="read", iostat=stat, iomsg=errmsg)
 
