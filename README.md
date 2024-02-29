@@ -80,6 +80,8 @@ open build/lib/
 
 puis clic droit et *Ouvrir* sur chaque fichier `.dylib`.
 
+Il est également à noter que l'application a soudainement cessé de bien fonctionner sur MacOS, la fenêtre étant affichée étrangement. Ce problème vient du fait que `glfw` ne reconnaît pas bien la dimension de l'écran. En bougeant le fenêtre vers le coin haut-gauche, la partie comprise par `glfw`, le jeu reprend son allure normale.
+
 ### Windows
 
 Pour l'instant aucune prise en charge ni test n'a été fait sur Windows. Le travail se portera probablement sur les arguments à passer au compilateur.
