@@ -5,11 +5,16 @@ author = "lukbrb"
 maintainer = "lucasbarbr@outlook.com"
 copyright = "Copyright 2024, lukbrb"
 
-[build]
-link = [ "OpenGL", "pthread", "m" ]
-
-
+[preprocess]
+[preprocess.cpp]
+macros=["FC={-fno-range-check}"]
 
 [library]
-source-dir = "src"
-"include-dir" = ["include"]
+include-dir = ["raylib-source/include/raylib.h"]
+build-script = "set_variables.sh"
+
+[[executable]]
+name="fort-2048"
+source-dir="app"
+main="main.f90"
+link = ["raylib"]
