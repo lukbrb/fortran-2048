@@ -74,9 +74,11 @@ Ainsi, avant de passer à l'étape 3 de la compilation :
 
 ```console
 mkdir -p build
-cp raylib-5.0/lib build
-open build/lib/*.so*
+cp -r raylib-5.0/lib build
+open build/lib/
 ```
+
+puis clic droit et *Ouvrir* sur chaque fichier `.dylib`.
 
 ### Windows
 
