@@ -21,14 +21,14 @@ git clone https://github.com/lukbrb/fortran-2048.git
 cd fortran-2048
 ```
 
-Avant de pouvoir compiler le projet, il nous faut installer `Raylib`.
+Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 
-### 2. Télécharger `Raylib`
+### 2. Télécharger raylib
 
-Le moyen le plus simple est de télécharger un fichier binaire précompilé de `raylib`. Le dernier lancement en date (29/02/2024) est celui de `Raylib` 5.0. Les fichiers binaires sont à télécharger dans la rubrique *Assets* (en bas de page) à l'url suivante : <https://github.com/raysan5/raylib/releases/tag/5.0>.
+Le moyen le plus simple est de télécharger un fichier binaire précompilé de `raylib`. Le dernier lancement en date (29/02/2024) est celui de `raylib 5.0` . Les fichiers binaires sont à télécharger dans la rubrique *Assets* (en bas de page) à l'url suivante : <https://github.com/raysan5/raylib/releases/tag/5.0>.
 
-Il suffit de télécharger l'archive correspondant à votre architecture, puis de l'extraire dans le rdossier `fortran-2048`.
-Pour faciliter la suite, renommons le dossier contenant le code source de `Raylib`:
+Il suffit de télécharger l'archive correspondant à votre architecture, puis de l'extraire dans le dossier `fortran-2048`.
+Pour faciliter la suite, renommons le dossier contenant le code source de `raylib`:
 
 ```console
 mv raylib-5.0_<ma_distribution> raylib-5.0
@@ -40,11 +40,11 @@ ou alternativement, modifiez la variable `RAYLIBDIR` dans le script `build.sh`:
     RAYLIBDIR="raylib-5.0_<ma_distribution>"
 ```
 
-*Note:* Pour MacOS, regardez [la rubrique suivante](###MacOS) avant de passer à l'étape 3.
+*Note:* Pour MacOS, regardez [la rubrique suivante](#macos) avant de passer à l'étape 3.
 
 ### 3. Compiler
 
-Quel que soit la solution choisie à l'étape précédente, le script `build.sh` se chargera ensuite de placer les bibliothèques dynamiques au bon endroit, et compilera le projet. À noter que nous modifions lors de la compilation le chemin de recherche du *run-time* (le `-rpath`). Ainsi, l'éxecutable doit être lancé depuis le dossier dans lequel il se trouve, en compagnie du dossier `lib` qui contient les bibliothèques partagées de `raylib`.
+Quelle que soit la solution choisie à l'étape précédente, le script `build.sh` se chargera ensuite de placer les bibliothèques dynamiques au bon endroit, et compilera le projet. À noter que nous modifions lors de la compilation le chemin de recherche du *run-time* (le `-rpath`). Ainsi, l'éxecutable doit être lancé depuis le dossier dans lequel il se trouve, en compagnie du dossier `lib` qui contient les bibliothèques partagées de `raylib`.
 
 Pour clarifier, après compilation si nous sommes dans le dossier `fortran-2048`, il faudra ainsi faire :
 
