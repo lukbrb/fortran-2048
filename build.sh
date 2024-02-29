@@ -26,10 +26,22 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 
 elif [[ "$OSTYPE" == "cygwin" ]]; then
         # POSIX compatibility layer and Linux environment emulation for Windows
-        echo "[INFO] La compilation sous Windows n'est pas encore prise en compte."
+        echo "[INFO] Détection d'une machine Windows MinGW"
+        echo "[INFO] La compilation sous Windows n'est pas encore testée."
+        echo "[INFO] Compilation en cours..."
+        LIBS="-I$RAYLIBDIR/include -L$RAYLIBDIR/lib -lraylib -Wl,-rpath=lib/"
+        mkdir -p build/
+        cp -r $RAYLIBDIR/lib build/
+        gfortran $FFLAGS -J build/ -o build/2048.exe $SRC $LIBS
 elif [[ "$OSTYPE" == "msys" ]]; then
         # Lightweight shell and GNU utilities compiled for Windows (part of MinGW)
-        echo "[INFO] La compilation sous Windows n'est pas encore prise en compte."
+        echo "[INFO] Détection d'une machine Windows MinGW"
+        echo "[INFO] La compilation sous Windows n'est pas encore testée."
+        echo "[INFO] Compilation en cours..."
+        LIBS="-I$RAYLIBDIR/include -L$RAYLIBDIR/lib -lraylib -Wl,-rpath=lib/"
+        mkdir -p build/
+        cp -r $RAYLIBDIR/lib build/
+        gfortran $FFLAGS -J build/ -o build/2048.exe $SRC $LIBS
         # ...
 else
         echo "OS Inconnu"
