@@ -37,7 +37,7 @@ mv raylib-5.0_<ma_distribution> raylib-5.0
 ou alternativement, modifiez la variable `RAYLIBDIR` dans le script `build.sh`:
 
 ```console
-    RAYLIBDIR="raylib-5.0_<ma_distribution>"
+RAYLIBDIR="raylib-5.0_<ma_distribution>"
 ```
 
 *Note:* Pour MacOS, regardez [la rubrique suivante](#macos) avant de passer à l'étape 3.
