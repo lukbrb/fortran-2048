@@ -4,7 +4,7 @@
 
 RAYLIBDIR="raylib-source"
 FFLAGS="-std=f2018 -fno-range-check -Wall -Wextra -Wno-conversion"
-SRC="src/*.f90 app/main.f90"
+SRC="src/iofiles.f90 src/raylib.f90 src/ui.f90 src/game.f90 app/main.f90"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "[INFO] Détection d'une machine Linux"
@@ -17,10 +17,11 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "[INFO] Détection d'une machine sous MacOS"
     echo "[INFO] Compilation en cours..."
-    LIBS="-I$RAYLIBDIR/include -L$RAYLIBDIR/lib -lraylib -Wl,-rpath=lib/"
+    # LIBS="-I$RAYLIBDIR/include -L$RAYLIBDIR/lib -lraylib -Xlinker -rpath -Xlinker lib/"
     # LIBS="-framework IOKit -framework Cocoa -framework OpenGL $(pkg-config --libs --cflags raylib)"
+    LIBS="-framework IOKit -framework Cocoa -framework OpenGL $(pkg-config --libs --cflags raylib)"    
     mkdir -p build/
-    cp -r $RAYLIBDIR/lib build/
+    # cp -r $RAYLIBDIR/lib build/
     gfortran $FFLAGS -J build/ -o build/2048 $SRC $LIBS
 
 elif [[ "$OSTYPE" == "cygwin" ]]; then
