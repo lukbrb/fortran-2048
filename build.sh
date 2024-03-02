@@ -4,7 +4,7 @@
 
 RAYLIBDIR="raylib-5.0"
 FFLAGS="-std=f2018 -fno-range-check -Wall -Wextra -Wno-conversion"
-SRC="src/iofiles.f90 src/raylib.f90 src/ui.f90 src/game.f90 app/main.f90"
+SRC="src/iofiles.f90 src/raylib.f90 src/game.f90 src/ui.f90 app/main.f90"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     echo "[INFO] Détection d'une machine Linux"
