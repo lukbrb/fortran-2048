@@ -5,16 +5,14 @@ author = "lukbrb"
 maintainer = "lucasbarbr@outlook.com"
 copyright = "Copyright 2024, lukbrb"
 
-[preprocess]
-[preprocess.cpp]
-macros=["FC={-fno-range-check}"]
-
 [library]
-include-dir = ["raylib-source/include/raylib.h"]
-build-script = "set_variables.sh"
+include-dir = ["raylib-5.0/include/"]
+build-script = "././fpm_build.sh"
+
+[build]
+link=["raylib"]
 
 [[executable]]
 name="fort-2048"
 source-dir="app"
 main="main.f90"
-link = ["raylib"]
