@@ -5,27 +5,22 @@
     Date : 02/03/2024
 """
 
-liens = {
-    'Darwin': {
-            'arm64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz"
 
-    },
-    'Linux': {
+macos = {
+        'arm64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz",
+        'x86_64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz"
+        }
+
+linux = {
             'amd64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz",
-            "i386":  "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_i386.tar.gz"
-    },
-    'Windows': {
-
+            'i386':  "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_i386.tar.gz"
+        }
+windows = {
             'win32_mingw-w64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_mingw-w64.zip",
             'win32_msvc16': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_msvc16.zip",
             'win64_mingw-w64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_mingw-w64.zip",
             'win64_msvc16': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip"
-
-    },
-    'Autre': {
-        'default': ""
-    }
-}
+        }   
 
 import platform
 import shutil
@@ -38,6 +33,10 @@ def print_info(msg: str) -> None:
 def print_erreur(msg: str) -> None:
     print("[ERREUR]", msg)
 
+def print_liens():
+    data = set(list(windows.values()) + list(linux.values()) + list(macos.values()))
+    for datum in data:
+        print("[+]", datum)
 
 msg_accueil = "Installateur et mise en place de la bibliothèque Raylib"
 print(len(msg_accueil) * '=')
@@ -54,31 +53,53 @@ else:
 
 print_info("Détéction de l'OS...")
 os_machine = platform.system()
+
 if os_machine == "":
     print_erreur("Impossible de déterminer l'OS source.")
     print_info("Arrêt de l'installation. Veuillez effectuer l'installation manuellement.")
+    print_info("Vous pouvez sélectionner un fichier parmi les liens suivants :")
+    print_liens()
     exit(1)
 
 print_info(f"OS détecté avec succès : {os_machine}")
 
 print_info("Détéction de l'architecture...")
-# arch = platform.architecture()
+arch, _ = platform.architecture() # ('64bit', 'ELF')
 # print(arch)
-arch = platform.machine()
+cpu = platform.machine()
 if arch == "":
     print_erreur("Impossible de déterminer l'architecture source.")
     print_info("Arrêt de l'installation. Veuillez effectuer l'installation manuellement.")
+    print_info("Vous pouvez sélectionner un fichier parmi les liens suivants :")
+    print_liens()
     exit(1)
 
-print_info(f"Architecture détecté avec succès : {arch}")
-print_info(f"Caractéristiques détectées: {os_machine}, {arch}")
-lien_utile = liens.get(os_machine).get(arch)
-filename = lien_utile.split("/")[-1]
+print_info(f"Architecture détecté avec succès : {cpu}, {arch}")
+print_info(f"Caractéristiques détectées: {os_machine}, {cpu}, {arch}")
 
-print_info(f"Fichier associé détecté : {lien_utile}")
+if os_machine == 'Darwin':
+    lien = macos.get('x86_64')
+elif os_machine == 'Linux':
+    if cpu == 'arm64': 
+        print_erreur("Aucun fichier précompilé de Raylib n'est disponible pour les machines ARM.")
+        exit(1)
+    if arch == '64bit':
+        lien = linux.get('amd64')
+    else:
+        lien = linux.get('i386')
+elif os_machine == 'Windows':
+    # il faut déterminer le compilateur: minGW ou msvc
+    if arch == '64bits':
+        lien = windows.get('win64_mingw-64')
+    else:
+        lien = windows.get('win32_mingw-w64')
+
+
+filename = lien.split("/")[-1]
+print_info(f"Fichier associé détecté : {lien}")
 
 print_info("Téléchargement du fichier...")
-response = urlretrieve(url=lien_utile, filename=filename)
+response = urlretrieve(url=lien, filename=filename)
 
 print_info("Archive téléchargée.")
 print_info("Extraction de l'archive...")
@@ -87,10 +108,12 @@ shutil.unpack_archive(filename=filename, extract_dir=extract_dir)
 print_info(f"Archive extraite dans le dossier {extract_dir}")
 print_info("La mise en place est prête !")
 print()
-continuer = input("Voulez vous procéder à la compilation ? [y/N]")
+continuer = input("Voulez vous procéder à la compilation ? [y/N] ")
 if continuer.lower() == "y":
     import subprocess
-    subprocess.run("./build.sh", shell = True, executable="/bin/bash")
+    script = "./winbuild.sh" if os_machine == "Windows" else "./build.sh"
+    print("Compilation avec", script)
+    subprocess.run(script, shell = True, executable="/bin/bash")
 else:
     print_info("Pour compiler le projet, lancez simplement le script './build.sh'")
 
