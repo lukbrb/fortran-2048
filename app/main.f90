@@ -7,22 +7,26 @@ program main
 
   implicit none
 
-  integer(kind=c_int) :: width, height, fps
-  real(c_float) :: dt
-  integer :: board(board_size_cl, board_size_cl)
-  integer(c_int) :: keypressed
-  real    :: board_x_px, board_y_px, board_boundary_width, board_boundary_height, board_size_px, cell_size_px
+  integer(kind=c_int) :: width = 0, height = 0, fps = 60
+  real(c_float) :: dt = 0.
+  integer :: board(board_size_cl, board_size_cl) = reshape([0, 0, 0, 0, &
+                                                            0, 0, 0, 0, &
+                                                            0, 0, 0, 0, &
+                                                            0, 0, 0, 0], shape=[board_size_cl, board_size_cl])
+  integer(c_int) :: keypressed = 0.
+  real    :: board_x_px = 0., board_y_px = 0., board_boundary_width = 0., &
+            board_boundary_height = 0., board_size_px = 0., cell_size_px = 0.
   logical :: can_board_move = .true.
   logical :: restart_the_game = .false.
-  integer :: score_record, score_actuel
+  integer :: score_record = 0, score_actuel = 0
   character(15) :: path = "record.txt"
   
+  print *, "Init program..."
   score_record = read_file(path)
-  score_actuel = 0
+
 
   width = screen_width_px
   height = screen_height_px
-  fps = 60
   
   board = init_board()
   call init_window(width, height, "FORTRAN 2048"// c_null_char)

@@ -116,7 +116,8 @@ contains
     integer function rand_int(a, b) result (j)
         integer, intent(in) :: a, b
         real :: u
-
+        
+        u = 0.
         call random_number(u)
         j = a + floor((b+1 - a) * u)
     end function rand_int
