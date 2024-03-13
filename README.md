@@ -251,7 +251,7 @@ où bien sûr il faut remplacer `XXXXXXXXXXXXX` par le code généré par `fpm` 
 Les étapes suivantes ont été testées sur les plateformes suivantes :
 
 |Plateforme|Compilateur|Verifié|
-|--:|:--|
+|--:|:--|:--|
 |Debian| `gfortran`| ✅|
 |Windows 10| `mingw64-gfortran`| ✅|
 |Windows 11| `mingw64-gfortran`| ✅|
