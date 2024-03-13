@@ -24,6 +24,8 @@ Des exécutables sont disponibles au téléchargement :
 |Windows| x86-64|[win_x86-64_fortran-2048.zip](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/win64_fortran-2048-1.0.zip)|  
 |Debian|amd64|[linux_amd64_fortran-2048.tar.xz](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/linux_amd64_fortran-2048-1.0.tar.xz)|  
 
+---
+
 ### Compilation
 
 Suivez les instructions suivantes si aucun exécutable n'est disponible pour votre plateforme, ou si vous souhaitez le compiler vous-même.
@@ -42,14 +44,15 @@ cd fortran-2048
 ```
 
 > [!NOTE]
-> Si vous ne disposez pas de `git`, vous pouvez télécharger un fichier zip contenant le code source [ici](https://github.com/lukbrb/fortran-2048/archive/refs/heads/master.zip)
+> Si vous ne disposez pas de `git`, vous pouvez télécharger un fichier zip contenant le code source [ici](https://github.com/lukbrb/fortran-2048/archive/refs/heads/master.zip).
 
 Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 
 #### 2. Télécharger raylib
 
 > [!NOTE]
-> Une version préliminaire du script `setup.py` permet d'automatiser l'étape > Pour l'utiliser, simplement taper
+> Une version préliminaire du script `setup.py` permet d'automatiser l'étape 
+> Pour l'utiliser, simplement taper
 >
 >```console
 >$ python setup.py
@@ -58,6 +61,8 @@ Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 > sous Windows ou MacOS. Sous Linux il faudra certainement remplacer `python` par `python3`. Le script essaie de déterminer l'OS ainsi que l'architecture de votre machine, afin de sélectionner le binaire `raylib` adapté. De plus, il organisera la structure des dossiers `lib/` et `include/`, et renommera le fichier raylib téléchargé. Il vous demandera ensuite si vous souhaitez compiler le programme.
 
 Le moyen le plus simple est de télécharger un fichier binaire précompilé de `raylib`. Le dernier lancement en date (29/02/2024) est celui de `raylib 5.0` . Les fichiers binaires sont à télécharger dans la rubrique *Assets* (en bas de page) à l'url suivante : <https://github.com/raysan5/raylib/releases/tag/5.0>. Vous y trouverez la table suivante
+
+
 <div data-view-component="true" class="Box Box--condensed mt-3">
   
     <ul data-view-component="true">
@@ -186,7 +191,7 @@ RAYLIBDIR="raylib-5.0_<ma_distribution>"
 ```
 
 > [!WARNING]
-> Pour MacOS, regardez [la rubrique suivante](#macos) avant de passer à l'étape 3.
+> Pour MacOS, regardez [la rubrique suivante](#étapes-suplemntaires-sur-macos) avant de passer à l'étape 3.
 
 #### 3. Compiler
 
@@ -203,18 +208,18 @@ L'éxecutable devrait avoir été crée dans le dossier indiqué par le terminal
 > [!NOTE]
 > À noter que nous modifions lors de la compilation le chemin de recherche du *run-time* (le `-rpath`). Ainsi, l'éxecutable doit être lancé depuis le dossier dans lequel il se trouve, en compagnie du dossier `lib` qui contient les bibliothèques partagées de `raylib`.
 > Pour clarifier, après compilation si nous sommes dans le dossier `fortran-2048`, il faudra ainsi faire :
-
+>
 >``` console
 > cd build/
 > ./2048
 >```
-
+>
 >Lancer directement la commande :
 >
 >``` console
 >build/2048
 >```
-
+>
 > depuis le dossier `fortran-2048` ne fonctionnera pas car le `-rpath` cherchera le dossier `lib` dans le répertoire `fortran-2048` et non `build/`. Ce comportement est bien-sûr modifiable en éditant le chemin passé à `-rpath` dans le script `build.sh`.
 
 ##### 3.2. Compilation avec fpm
