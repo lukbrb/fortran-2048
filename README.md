@@ -2,9 +2,10 @@
 
 Jeu du 2048 codé en Fortran, avec l'aide de la bibliothèque C Raylib.
 <p align="center">
-	<img src="icone.png" alt=""><br>
+	<img src="icone.png" width="300" height="300"><br>
 	
 </p>
+
 ## Règles
 
 Bougez les carrés avec les flèches du clavier. Lorsque deux nombres similaires sont côte-à-côte, ils s'assembleront pour former la puissance de 2 supérieure. Le but est d'arriver à combiner assez de cases pour atteindre la valeur de 2048. Lorsque qu'il ne reste aucune case de disponible, et qu'aucun mouvement ne mène à l'association de deux cases, la partie est perdue.
@@ -18,10 +19,10 @@ Bougez les carrés avec les flèches du clavier. Lorsque deux nombres similaires
 
 Des exécutables sont disponibles au téléchargement :
 
-|OS|Architecture|Lien|
-|--:|:--|
-|Windows| x86-64|[win_x86-64_fortran-2048.zip](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/win64_fortran-2048-1.0.zip)|
-|Debian|amd64|[linux_amd64_fortran-2048.tar.xz](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/linux_amd64_fortran-2048-1.0.tar.xz)|
+|OS|Architecture|Lien|  
+|--:|:--|  
+|Windows| x86-64|[win_x86-64_fortran-2048.zip](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/win64_fortran-2048-1.0.zip)|  
+|Debian|amd64|[linux_amd64_fortran-2048.tar.xz](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/linux_amd64_fortran-2048-1.0.tar.xz)|  
 
 ### Compilation
 
