@@ -95,16 +95,31 @@ elif os_machine == 'Windows':
         lien = windows.get('win32_mingw-w64')
 
 
-filename = lien.split("/")[-1]
+archive_filename = lien.split("/")[-1]
 print_info(f"Fichier associé détecté : {lien}")
 
 print_info("Téléchargement du fichier...")
-response = urlretrieve(url=lien, filename=filename)
+response = urlretrieve(url=lien, filename=archive_filename)
 
 print_info("Archive téléchargée.")
 print_info("Extraction de l'archive...")
+# TODO: Ajoute un dossier dans le dossier raylib-5.0
+# Corriger cela
 extract_dir = "raylib-5.0"
-shutil.unpack_archive(filename=filename, extract_dir=extract_dir)
+shutil.unpack_archive(filename=archive_filename) #, extract_dir=extract_dir)
+print_info("Renommage de raylib...")
+if archive_filename.endswith("zip"):
+    raylib_dir_name = archive_filename.replace(".zip", "")
+elif archive_filename.endswith('.tar.gz'):
+    raylib_dir_name = archive_filename.replace(".tar.gz", "")
+else:
+    raylib_dir_name = archive_filename.split(".")[0] + '.' + archive_filename.split(".")[1]
+shutil.move(raylib_dir_name, extract_dir)
+print_info("Copie des bibliothèques...")
+shutil.copytree(f"{extract_dir}/include", "include")
+shutil.copytree(f"{extract_dir}/lib", "lib")
+shutil.copytree(f"{extract_dir}/lib", "build/lib")
+
 print_info(f"Archive extraite dans le dossier {extract_dir}")
 print_info("La mise en place est prête !")
 print()
