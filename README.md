@@ -51,7 +51,7 @@ Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 #### 2. Télécharger raylib
 
 > [!NOTE]
-> Une version préliminaire du script `setup.py` permet d'automatiser l'étape
+> Une version préliminaire du script `setup.py` permet d'automatiser cette étape.  
 > Pour l'utiliser, simplement taper
 >
 >```console
@@ -64,7 +64,6 @@ Le moyen le plus simple est de télécharger un fichier binaire précompilé de 
 
 <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz" rel="nofollow">
     <span data-view-component="true">raylib-5.0_linux_amd64.tar.gz</span>
-    <span data-view-component="true"></span>
 </a> 
 
 <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_i386.tar.gz">
@@ -72,75 +71,29 @@ Le moyen le plus simple est de télécharger un fichier binaire précompilé de 
     <span data-view-component="true" class="Truncate-text"></span>
 </a>
  <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz" rel="nofollow">
-    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_macos.tar.gz</span>
-    <span data-view-component="true" class="Truncate-text"></span>
+    <span data-view-component="true">raylib-5.0_macos.tar.gz</span>
+
 </a>  
-    <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-sm-left flex-auto ml-md-3">2.96 MB</span>
-    <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-right flex-shrink-0 flex-grow-0 ml-3"><relative-time datetime="2023-11-18T12:07:50Z" class="no-wrap" prefix="" title="Nov 18, 2023, 1:07 PM GMT+1">2023-11-18T12:07:50Z</relative-time></span>
-</div></li>
-        <li data-view-component="true" class="Box-row d-flex flex-column flex-md-row">      <div data-view-component="true" class="d-flex flex-justify-start col-12 col-lg-9">
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-package color-fg-muted">
-    <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"></path>
-</svg>
-        <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_webassembly.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_webassembly.zip</span>
-    <span data-view-component="true" class="Truncate-text"></span>
-</a></div>      <div data-view-component="true" class="d-flex flex-auto flex-justify-end col-md-4 ml-3 ml-md-0 mt-1 mt-md-0 pl-1 pl-md-0">
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-sm-left flex-auto ml-md-3">572 KB</span>
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-right flex-shrink-0 flex-grow-0 ml-3"><relative-time datetime="2023-11-18T12:06:55Z" class="no-wrap" prefix="" title="Nov 18, 2023, 1:06 PM GMT+1">2023-11-18T12:06:55Z</relative-time></span>
-</div></li>
-        <li data-view-component="true" class="Box-row d-flex flex-column flex-md-row">      <div data-view-component="true" class="d-flex flex-justify-start col-12 col-lg-9">
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-package color-fg-muted">
-    <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"></path>
-</svg>
-        <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_mingw-w64.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
+
+<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_webassembly.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
+    <span data-view-component="true" >raylib-5.0_webassembly.zip</span>
+</a> 
+
+<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_mingw-w64.zip" data-view-component="true">
     <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win32_mingw-w64.zip</span>
-    <span data-view-component="true" class="Truncate-text"></span>
-</a></div>      <div data-view-component="true" class="d-flex flex-auto flex-justify-end col-md-4 ml-3 ml-md-0 mt-1 mt-md-0 pl-1 pl-md-0">
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-sm-left flex-auto ml-md-3">789 KB</span>
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-right flex-shrink-0 flex-grow-0 ml-3"><relative-time datetime="2023-11-18T12:06:41Z" class="no-wrap" prefix="" title="Nov 18, 2023, 1:06 PM GMT+1">2023-11-18T12:06:41Z</relative-time></span>
-</div></li>
-        <li data-view-component="true" class="Box-row d-flex flex-column flex-md-row">      <div data-view-component="true" class="d-flex flex-justify-start col-12 col-lg-9">
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-package color-fg-muted">
-    <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"></path>
-</svg>
-        <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_msvc16.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win32_msvc16.zip</span>
-    <span data-view-component="true" class="Truncate-text"></span>
-</a></div>      <div data-view-component="true" class="d-flex flex-auto flex-justify-end col-md-4 ml-3 ml-md-0 mt-1 mt-md-0 pl-1 pl-md-0">
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-sm-left flex-auto ml-md-3">3.56 MB</span>
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-right flex-shrink-0 flex-grow-0 ml-3"><relative-time datetime="2023-11-18T12:10:46Z" class="no-wrap" prefix="" title="Nov 18, 2023, 1:10 PM GMT+1">2023-11-18T12:10:46Z</relative-time></span>
-</div></li>
-        <li data-view-component="true" class="Box-row d-flex flex-column flex-md-row">      <div data-view-component="true" class="d-flex flex-justify-start col-12 col-lg-9">
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-package color-fg-muted">
-    <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"></path>
-</svg>
-        <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_mingw-w64.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win64_mingw-w64.zip</span>
-    <span data-view-component="true" class="Truncate-text"></span>
-</a></div>      <div data-view-component="true" class="d-flex flex-auto flex-justify-end col-md-4 ml-3 ml-md-0 mt-1 mt-md-0 pl-1 pl-md-0">
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-sm-left flex-auto ml-md-3">1.56 MB</span>
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-right flex-shrink-0 flex-grow-0 ml-3"><relative-time datetime="2023-11-18T12:08:31Z" class="no-wrap" prefix="" title="Nov 18, 2023, 1:08 PM GMT+1">2023-11-18T12:08:31Z</relative-time></span>
-</div></li>
-        <li data-view-component="true" class="Box-row d-flex flex-column flex-md-row">      <div data-view-component="true" class="d-flex flex-justify-start col-12 col-lg-9">
-        <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-package color-fg-muted">
-    <path d="m8.878.392 5.25 3.045c.54.314.872.89.872 1.514v6.098a1.75 1.75 0 0 1-.872 1.514l-5.25 3.045a1.75 1.75 0 0 1-1.756 0l-5.25-3.045A1.75 1.75 0 0 1 1 11.049V4.951c0-.624.332-1.201.872-1.514L7.122.392a1.75 1.75 0 0 1 1.756 0ZM7.875 1.69l-4.63 2.685L8 7.133l4.755-2.758-4.63-2.685a.248.248 0 0 0-.25 0ZM2.5 5.677v5.372c0 .09.047.171.125.216l4.625 2.683V8.432Zm6.25 8.271 4.625-2.683a.25.25 0 0 0 .125-.216V5.677L8.75 8.432Z"></path>
-</svg>
-        <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip" rel="nofollow" data-turbo="false" 
 </a>
-        <li data-view-component="true" class="Box-row d-flex flex-column flex-md-row">      <div data-view-component="true" class="d-flex flex-justify-start col-12 col-lg-9">
 
-        <a href="/raysan5/raylib/archive/refs/tags/5.0.zip" rel="nofollow" data-turbo="false" 
+<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_msvc16.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
+    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win32_msvc16.zip</span>
+</a> 
 
-        <a href="/raysan5/raylib/archive/refs/tags/5.0.tar.gz" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-    <span data-view-component="true" class="Truncate-text text-bold">Source code</span>
-    <span data-view-component="true" class="Truncate-text">(tar.gz)</span>
-</a></div>      <div data-view-component="true" class="d-flex flex-auto flex-justify-end col-md-4 ml-3 ml-md-0 mt-1 mt-md-0 pl-1 pl-md-0">
-          <span style="white-space: nowrap;" data-view-component="true" class="color-fg-muted text-right flex-shrink-0 flex-grow-0 ml-3"><relative-time datetime="2023-11-15T10:30:50Z" class="no-wrap" prefix="" title="Nov 15, 2023, 11:30 AM GMT+1">2023-11-15T10:30:50Z</relative-time></span>
 
-</div></li>
-</ul>  
-</div>
+<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_mingw-w64.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
+<span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win64_mingw-w64.zip</span>
+</a> 
+<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip" rel="nofollow">
+<span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win64_msvc16.zip</span>
+</a> 
 
 Il suffit de télécharger l'archive correspondant à votre architecture, puis de l'extraire dans le dossier `fortran-2048`.
 Pour faciliter la suite, renommons le dossier contenant le code source de `raylib`:
