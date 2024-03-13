@@ -9,12 +9,13 @@ Jeu du 2048 codé en Fortran, avec l'aide de la bibliothèque C Raylib.
 
 Bougez les carrés avec les flèches du clavier. Lorsque deux nombres similaires sont côte-à-côte, ils s'assembleront pour former la puissance de 2 supérieure. Le but est d'arriver à combiner assez de cases pour atteindre la valeur de 2048. Lorsque qu'il ne reste aucune case de disponible, et qu'aucun mouvement ne mène à l'association de deux cases, la partie est perdue.
 
+![Aperçu du jeu](ressources/apercu.mov)
 > [!NOTE]
 > Comparé au jeu habituel du 2048, le score est calculé différemment; il est simplement la somme de la valeur des cases sur la grille.
 
 ---
 
-### Téléchargement
+## Téléchargement
 
 Des exécutables sont disponibles au téléchargement :
 
@@ -25,7 +26,7 @@ Des exécutables sont disponibles au téléchargement :
 
 ---
 
-### Compilation
+## Compilation
 
 Suivez les instructions suivantes si aucun exécutable n'est disponible pour votre plateforme, ou si vous souhaitez le compiler vous-même.
 
@@ -33,7 +34,7 @@ Suivez les instructions suivantes si aucun exécutable n'est disponible pour vot
 > Il est nécessaire pour cette étape d'avoir un compilateur Fortran.
 > Les étapes suivantes sont testées avec `[gfortran](https://gcc.gnu.org/fortran/)`
 
-#### 1. Clonâge du répertoire
+### 1. Clonâge du répertoire
 
 Pour commencer, ouvrez un terminal et placez-vous dans votre dossier de travail. Clônez le répertoire de `fortran-2048`, et placez vous dedans :
 
@@ -47,7 +48,7 @@ cd fortran-2048
 
 Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 
-#### 2. Télécharger raylib
+### 2. Télécharger raylib
 
 > [!NOTE]
 > Une version préliminaire du script `setup.py` permet d'automatiser cette étape.  
@@ -87,9 +88,9 @@ RAYLIBDIR="raylib-5.0_<ma_distribution>"
 > [!WARNING]
 > Pour MacOS, regardez [la rubrique suivante](#étapes-suplémentaires-sur-macos) avant de passer à l'étape 3.
 
-#### 3. Compiler
+### 3. Compiler
 
-##### 3.1. Compilation manuelle
+#### 3.1. Compilation manuelle
 
 Quelle que soit la solution choisie à l'étape précédente, le script `build.sh` se chargera ensuite de placer les bibliothèques dynamiques au bon endroit, et compilera le projet.
 
@@ -116,7 +117,7 @@ L'éxecutable devrait avoir été crée dans le dossier indiqué par le terminal
 >
 > depuis le dossier `fortran-2048` ne fonctionnera pas car le `-rpath` cherchera le dossier `lib` dans le répertoire `fortran-2048` et non `build/`. Ce comportement est bien-sûr modifiable en éditant le chemin passé à `-rpath` dans le script `build.sh`.
 
-##### 3.2. Compilation avec fpm
+#### 3.2. Compilation avec fpm
 
 Il est possible de compiler le projet avec `fpm` ([Fortran Package Manager](https://fpm.fortran-lang.org/fr/index.html)). Avant de lancer le script `build.sh`, il suffit de taper les commandes suivantes :
 
