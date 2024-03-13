@@ -9,7 +9,9 @@ Jeu du 2048 codé en Fortran, avec l'aide de la bibliothèque C Raylib.
 
 Bougez les carrés avec les flèches du clavier. Lorsque deux nombres similaires sont côte-à-côte, ils s'assembleront pour former la puissance de 2 supérieure. Le but est d'arriver à combiner assez de cases pour atteindre la valeur de 2048. Lorsque qu'il ne reste aucune case de disponible, et qu'aucun mouvement ne mène à l'association de deux cases, la partie est perdue.
 
-<video src="ressources/apercu.mov" width="320" height="240" controls></video>
+
+https://github.com/lukbrb/fortran-2048/assets/81429406/561b4bb7-1b6d-4ad6-b5c8-98bf45138369
+
 
 > [!NOTE]
 > Comparé au jeu habituel du 2048, le score est calculé différemment; il est simplement la somme de la valeur des cases sur la grille.
