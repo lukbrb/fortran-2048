@@ -31,7 +31,7 @@ Suivez les instructions suivantes si aucun exécutable n'est disponible pour vot
 
 > [!WARNING]
 > Il est nécessaire pour cette étape d'avoir un compilateur Fortran.
-> Les étapes suivantes sont testées avec `gfortran`
+> Les étapes suivantes sont testées avec `[gfortran](https://gcc.gnu.org/fortran/)`
 
 #### 1. Clonâge du répertoire
 
@@ -118,7 +118,7 @@ L'éxecutable devrait avoir été crée dans le dossier indiqué par le terminal
 
 ##### 3.2. Compilation avec fpm
 
-Il est possible de compiler le projet avec `fpm` (Fotran Package Manager). Avant de lancer le script `build.sh`, il suffit de taper les commandes suivantes :
+Il est possible de compiler le projet avec `fpm` ([Fortran Package Manager](https://fpm.fortran-lang.org/fr/index.html)). Avant de lancer le script `build.sh`, il suffit de taper les commandes suivantes :
 
 ```console
 export FPM_FFLAGS="-std=f2018 -fno-range-check"
@@ -168,3 +168,10 @@ open build/lib/
 puis clic droit et *Ouvrir* sur chaque fichier `.dylib`.
 
 Il est également à noter que l'application a soudainement cessé de bien fonctionner sur MacOS, la fenêtre étant affichée étrangement. Ce problème vient du fait que `glfw` ne reconnaît pas bien la dimension de l'écran. En bougeant le fenêtre vers le coin haut-gauche, la partie comprise par `glfw`, le jeu reprend son allure normale. Ceci est dû à un problème avec la haute résolution de l'écran iMac (observé sur ARM). Passer en basse résolution résout le problème.
+
+### Crédits
+
+Certaines parties du code sont tirées ou inspirées des programmes et bibliothèques suivantes :
+
+- Le code est largement inspiré de [Tic-Tac-Toe Fortran par Tsoding](https://github.com/tsoding/tic-tac-toe-fortran-raylib)
+- L'interface du type `color_type` découle de la bibliothèque [fortran-raylib](https://github.com/interkosmos/fortran-raylib) par interkosmos
