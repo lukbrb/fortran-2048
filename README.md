@@ -2,8 +2,7 @@
 
 Jeu du 2048 codé en Fortran, avec l'aide de la bibliothèque C Raylib.
 <p align="center">
- <img src="icone.png" width="300" height="300"><br>
- 
+ <img src="ressources/icone.png" width="300" height="300"><br>
 </p>
 
 ## Règles
@@ -62,38 +61,15 @@ Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 
 Le moyen le plus simple est de télécharger un fichier binaire précompilé de `raylib`. Le dernier lancement en date (29/02/2024) est celui de `raylib 5.0` . Les fichiers binaires sont à télécharger dans la rubrique *Assets* (en bas de page) à l'url suivante : <https://github.com/raysan5/raylib/releases/tag/5.0>. Vous y trouverez la table suivante
 
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz" rel="nofollow">
-    <span data-view-component="true">raylib-5.0_linux_amd64.tar.gz</span>
-</a> 
-
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_i386.tar.gz">
-    <span data-view-component="true" >raylib-5.0_linux_i386.tar.gz</span>
-    <span data-view-component="true" class="Truncate-text"></span>
-</a>
- <a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz" rel="nofollow">
-    <span data-view-component="true">raylib-5.0_macos.tar.gz</span>
-
-</a>  
-
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_webassembly.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-    <span data-view-component="true" >raylib-5.0_webassembly.zip</span>
-</a> 
-
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_mingw-w64.zip" data-view-component="true">
-    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win32_mingw-w64.zip</span>
-</a>
-
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_msvc16.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-    <span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win32_msvc16.zip</span>
-</a> 
-
-
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_mingw-w64.zip" rel="nofollow" data-turbo="false" data-view-component="true" class="Truncate">
-<span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win64_mingw-w64.zip</span>
-</a> 
-<a href="/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip" rel="nofollow">
-<span data-view-component="true" class="Truncate-text text-bold">raylib-5.0_win64_msvc16.zip</span>
-</a> 
+|OS|Architecture/Compilateur|Lien|  
+|--:|:--| :--|  
+|Windows| Mingw64|[raylib-5.0_win64_mingw-w64.zip](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_mingw-w64.zip)|
+|Windows| Mingw32|[raylib-5.0_win32_mingw-w64.zip](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_mingw-w64.zip)|
+|Windows| MSVC-64|[raylib-5.0_win64_msvc16.zip](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win64_msvc16.zip)|
+|Windows| MSVC-32|[raylib-5.0_win32_msvc16.zip](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_win32_msvc16.zip)|
+|Linux|amd64|[raylib-5.0_linux_amd64.tar.gz](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_amd64.tar.gz)|
+|Linux| i386 | [raylib-5.0_linux_i386.tar.gz](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_linux_i386.tar.gz) |
+| MacOS | Any | [raylib-5.0_macos.tar.gz](https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz) |
 
 Il suffit de télécharger l'archive correspondant à votre architecture, puis de l'extraire dans le dossier `fortran-2048`.
 Pour faciliter la suite, renommons le dossier contenant le code source de `raylib`:
