@@ -20,7 +20,7 @@ Bougez les carrés avec les flèches du clavier. Lorsque deux nombres similaires
 Des exécutables sont disponibles au téléchargement :
 
 |OS|Architecture|Lien|  
-|--:|:--|  
+|--:|:--| :--|  
 |Windows| x86-64|[win_x86-64_fortran-2048.zip](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/win64_fortran-2048-1.0.zip)|  
 |Debian|amd64|[linux_amd64_fortran-2048.tar.xz](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/linux_amd64_fortran-2048-1.0.tar.xz)|  
 
@@ -48,7 +48,8 @@ Avant de pouvoir compiler le projet, il nous faut installer `raylib`.
 
 #### 2. Télécharger raylib
 
-> [!NOTE] Une version préliminaire du script `setup.py` permet d'automatiser l'étape > Pour l'utiliser, simplement taper
+> [!NOTE]
+> Une version préliminaire du script `setup.py` permet d'automatiser l'étape > Pour l'utiliser, simplement taper
 >
 >```console
 >$ python setup.py
