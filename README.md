@@ -191,7 +191,7 @@ RAYLIBDIR="raylib-5.0_<ma_distribution>"
 ```
 
 > [!WARNING]
-> Pour MacOS, regardez [la rubrique suivante](#étapes-suplemntaires-sur-macos) avant de passer à l'étape 3.
+> Pour MacOS, regardez [la rubrique suivante](#étapes-suplémentaires-sur-macos) avant de passer à l'étape 3.
 
 #### 3. Compiler
 
@@ -260,7 +260,7 @@ Les étapes suivantes ont été testées sur les plateformes suivantes :
 
 ---
 
-### Étapes suplemntaires sur MacOS
+### Étapes suplémentaires sur MacOS
 
 Une fois `raylib` téléchargé, vous devrez probablement copier puis ouvrir manuellement les bibliothèques partagées à cause du parfeu de MacOS.
 Ainsi, avant de passer à l'étape 3 de la compilation :
