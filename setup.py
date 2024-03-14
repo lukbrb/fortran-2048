@@ -87,7 +87,7 @@ elif os_machine == 'Linux':
         lien = linux.get('amd64')
     else:
         lien = linux.get('i386')
-elif os_machine == 'Windows':
+elif os_machine == 'Windows' or  "MINGW" in os_machine.upper():
     # il faut déterminer le compilateur: minGW ou msvc
     if arch == '64bit':
         lien = windows.get('win64_mingw-64')
@@ -95,6 +95,7 @@ elif os_machine == 'Windows':
         lien = windows.get('win32_mingw-w64')
 else:
     print_erreur("Architecture non détectée...")
+    exit(1)
 
 
 archive_filename = lien.split("/")[-1]
