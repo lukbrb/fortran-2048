@@ -26,6 +26,7 @@ Des exécutables sont disponibles au téléchargement :
 |--:|:--| :--|  
 |Windows| x86-64|[win_x86-64_fortran-2048.zip](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/win64_fortran-2048-1.0.zip)|  
 |Debian|amd64|[linux_amd64_fortran-2048.tar.xz](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/linux_amd64_fortran-2048-1.0.tar.xz)|  
+| MacOS | arm64 | [macos_fortran-2048.zip](https://github.com/lukbrb/fortran-2048/releases/download/release_v1.0.0-beta/macos_fortran-2048.zip)|
 
 ---
 
