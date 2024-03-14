@@ -90,7 +90,7 @@ elif os_machine == 'Linux':
 elif os_machine == 'Windows' or  "MINGW" in os_machine.upper():
     # il faut déterminer le compilateur: minGW ou msvc
     if arch == '64bit':
-        lien = windows.get('win64_mingw-64')
+        lien = windows.get('win64_mingw-w64')
     else:
         lien = windows.get('win32_mingw-w64')
 else:
