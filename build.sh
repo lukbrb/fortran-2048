@@ -17,7 +17,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     echo "[INFO] Détection d'une machine sous MacOS"
     echo "[INFO] Compilation en cours..."
-    LIBS="-I$RAYLIBDIR/include -L$RAYLIBDIR/lib -lraylib -Xlinker -rpath -Xlinker lib/"
+    # LIBS="-static-libgfortran -static-libgcc -static-libquadmath -I$RAYLIBDIR/include -L$RAYLIBDIR/lib -lraylib -Xlinker -rpath -Xlinker lib/"
+    LIBS="-static-libgfortran -static-libgcc -static-libquadmath $RAYLIBDIR/lib/libraylib.a -framework IOKit -framework Cocoa -framework OpenGL"
+
     # LIBS="-framework IOKit -framework Cocoa -framework OpenGL $(pkg-config --libs --cflags raylib)"
     mkdir -p build/
 #     cp -r $RAYLIBDIR/lib build/
