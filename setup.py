@@ -7,7 +7,7 @@
 
 
 macos = {
-        'arm64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz",
+        'arm64': "https://github.com/raysan5/raylib/releases/download/4.5.0/raylib-4.5.0_macos.tar.gz",
         'x86_64': "https://github.com/raysan5/raylib/releases/download/5.0/raylib-5.0_macos.tar.gz"
         }
 
@@ -78,7 +78,7 @@ print_info(f"Architecture détecté avec succès : {cpu}, {arch}")
 print_info(f"Caractéristiques détectées: {os_machine}, {cpu}, {arch}")
 
 if os_machine == 'Darwin':
-    lien = macos.get('x86_64')
+    lien = macos.get('arm64')
 elif os_machine == 'Linux':
     if cpu == 'arm64': 
         print_erreur("Aucun fichier précompilé de Raylib n'est disponible pour les machines ARM.")
@@ -89,7 +89,7 @@ elif os_machine == 'Linux':
         lien = linux.get('i386')
 elif os_machine == 'Windows':
     # il faut déterminer le compilateur: minGW ou msvc
-    if arch == '64bits':
+    if arch == '64bit':
         lien = windows.get('win64_mingw-64')
     else:
         lien = windows.get('win32_mingw-w64')
