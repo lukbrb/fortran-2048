@@ -93,6 +93,8 @@ elif os_machine == 'Windows':
         lien = windows.get('win64_mingw-64')
     else:
         lien = windows.get('win32_mingw-w64')
+else:
+    print_erreur("Architecture non détectée...")
 
 
 archive_filename = lien.split("/")[-1]
